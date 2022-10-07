@@ -7,9 +7,9 @@ var bpmSlider = document.getElementById("bpm-slider")
 
 var searchEl = document.getElementById("search")
 
-var notes 
 
 
+var notes = ["C3", "G3", "D4", "E4", "B4", "C5", "G5"]
 
 
 
@@ -27,11 +27,10 @@ const seq = new Tone.Sequence(function (time, note) {
 
 
 
-function play(notes) {
-    notes = []
+function play() {
     Tone.Transport.start()
     notes.push(searchEl.value)
-    console.log(notes)
+    console.log(searchEl.value)
 }
 
 function stop() {
