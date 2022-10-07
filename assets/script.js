@@ -11,6 +11,11 @@ var charactersArray = ['k', 'k', 'k', 'b', 'k' , 'b', 'k', 'b'] //['a', 'b', 'c'
 //Get all elements from HTML
 var playButton = document.getElementById("playButton")
 var stopButton = document.getElementById("stopButton")
+var bpmSlider = document.getElementById("bpm-slider")
+var submitButton = document.getElementById("submit")
+
+
+
 
 //audio files
 var audioB = new Audio('./assets/sounds/bell.wav');
@@ -89,14 +94,24 @@ function playBeat() {
 function play() {
     clearInterval(bpm);
     bpm = setInterval(playBeat, 500);
+
+    
+    
+}
+function stop() {
+    clearInterval(bpm);
 }
 
-function stopBeat() {
-    clearInterval(bpm);
+//SLIDERS
+
+
+bpmSlider.oninput = function() {
+    console.log(bpmSlider.value);
 }
 
 
 
 //add event listeners
 playButton.addEventListener('click', play)
-stopButton.addEventListener('click', stopBeat)
+stopButton.addEventListener('click', stop)
+submitButton.addEventListener('click', )
