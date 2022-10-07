@@ -7,7 +7,7 @@ var formatURL = "?format=json&callback=callback"
 
 
 //psuedo code
-var charactersArray = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+var charactersArray = ['k', 'k', 'k', 'b', 'k' , 'b', 'k', 'b'] //['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 //Get all elements from HTML
 var playButton = document.getElementById("playButton")
 var stopButton = document.getElementById("stopButton")
@@ -16,7 +16,8 @@ var stopButton = document.getElementById("stopButton")
 var audioB = new Audio('./assets/sounds/bell.wav');
 var audioK = new Audio('./assets/sounds/kick.wav');
 
-const bpm = setInterval(playBeat, 1000);
+var bpm 
+var idx = 0
 
 //Search bar
 //Lyrics container 
@@ -63,25 +64,31 @@ const bpm = setInterval(playBeat, 1000);
 //Interval
 
 //Play Beat Function
-
-
 function playBeat() {
-    clearInterval(bpm);
-    // const synth = new Tone.Synth().toDestination();
-    // synth.triggerAttackRelease("C4", "8n");
-
-    for (var i = 0; i < charactersArray.length; i++) {
-
-
-        if (charactersArray[i] === 'b') {
-            audioB.play();
-            console.log('hey')
-        }
-        else if (charactersArray[i] === 'k') {
-            audioK.play();
-            console.log('hi')
-        }
+    // if at end of chars array
+    if (idx === charactersArray.length - 1) {
+        // loop back to beginning
+        idx = 0
     }
+
+    if (charactersArray[idx] === 'b') {
+        audioB.pause()
+        audioB.load()
+        audioB.play();
+        console.log('hey')
+    }
+    else if (charactersArray[idx] === 'k') {
+        audioK.pause()
+        audioK.load()
+        audioK.play();
+        console.log('hi')
+    }
+    idx++
+}
+
+function play() {
+    clearInterval(bpm);
+    bpm = setInterval(playBeat, 500);
 }
 
 function stopBeat() {
@@ -91,5 +98,5 @@ function stopBeat() {
 
 
 //add event listeners
-playButton.addEventListener('click', playBeat)
+playButton.addEventListener('click', play)
 stopButton.addEventListener('click', stopBeat)
