@@ -12,7 +12,7 @@ var charactersArray = ['k', 'k', 'k', 'b', 'k' , 'b', 'k', 'b'] //['a', 'b', 'c'
 var playButton = document.getElementById("playButton")
 var stopButton = document.getElementById("stopButton")
 var bpmSlider = document.getElementById("bpm-slider")
-var submitButton = document.getElementById("submit")
+
 
 
 
@@ -94,16 +94,10 @@ function playBeat() {
 function play() {
     clearInterval(bpm);
     bpm = setInterval(playBeat, 500);
-
-    
-    
 }
 function stop() {
     clearInterval(bpm);
 }
-
-//SLIDERS
-
 
 bpmSlider.oninput = function() {
     console.log(bpmSlider.value);
@@ -111,7 +105,9 @@ bpmSlider.oninput = function() {
 
 
 
+
+
+
 //add event listeners
 playButton.addEventListener('click', play)
 stopButton.addEventListener('click', stop)
-submitButton.addEventListener('click', )
