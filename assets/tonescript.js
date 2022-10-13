@@ -1,3 +1,4 @@
+let today = new Date().toISOString().slice(0, 10)
 
 var playButton = document.getElementById("playButton")
 var stopButton = document.getElementById("stopButton")
@@ -10,33 +11,67 @@ notes = []
 
 
 
-// function searchAPI() {
 
-
-function searchNews() {
+console.log(today)
+function searchNews1() {
     var newsSearchString = newsSearchEl.value
 
-    var APIKey = "46b839ff294f4764ade00a0cb5999dcd"
-    var url = 'https://newsapi.org/v2/everything?' +
-        'q='+ newsSearchString + '&' +
-        'from=2022-10-13&' +
-        'sortBy=popularity&' +
-        'apiKey=' + APIKey;
+    var APIKey = "hjEYIlKUFuYilv8Qo8M-Wsv98rmK9mTxqtSH19k2q-0"
+    var url = 'https://api.newscatcherapi.com/v2/search?q=' + newsSearchString
 
 
-    
+
     var req = new Request(url);
 
-    fetch(req)
+    fetch(req, {
+        headers: {
+            'x-api-key': APIKey
+        }
+    })
         .then(function (response) {
-            console.log(response.json());
-        })
+            return response.json()
 
+        })
+        .then(function (json) {
+            var title = json.articles[0].title.toLowerCase().replace(/[^a-z0-9 ]/gi, '').split("")
+            notes = (title)
+            console.log(title)
+        })
+}
+
+function pushNotes(){
 
 }
+// function searchNews() {
+//     var newsSearchString = newsSearchEl.value
+
+//     var APIKey = "46b839ff294f4764ade00a0cb5999dcd"
+//     var url = 'https://newsapi.org/v2/everything?' +
+//         'q=' + newsSearchString + '&' +
+//         'from='+today+'&' +
+//         'sortBy=popularity&' +
+//         'apiKey=' + APIKey;
+
+
+
+//     var req = new Request(url);
+
+//     fetch(req)
+//         .then(function (response) {
+//           console.log(response.json())
+
+//         })
+//         .then(function(){
+
+//         })
+
+
+// }
 
 
 //need a few more samples
+
+
 const samples = new Tone.ToneAudioBuffers({
     bell: "assets/sounds/bell.wav",
     chime: "assets/sounds/chime.wav",
@@ -62,10 +97,14 @@ function play() {
 
     Tone.Transport.stop()
     Tone.Transport.start()
-    playButton.disabled = 'true'
 
-    var customSearchString = customSearchEl.value.split("")
-    notes.push(customSearchString)
+    //only allow one playback?
+    playButton.disabled = true
+
+    //get input value from custom search and 'split' string into individual letters
+    //push them into notes array
+    // var customSearchString = customSearchEl.value.toLowerCase().split("")
+    // notes.push(customSearchString)
 
     const player = new Tone.Player().toDestination();
     player.buffer = samples.get("kick");
@@ -146,12 +185,8 @@ function play() {
     player26.buffer = samples.get("kick");
 
 
-
-
-
-
     const seq = new Tone.Sequence(function (time, note) {
-        Tone.Transport.bpm.value = 20;
+        Tone.Transport.bpm.value = 160;
 
         if (note === 'a') {
             player.start();
@@ -266,6 +301,7 @@ function play() {
 
 function stop() {
     Tone.Transport.stop()
+    playButton.disabled = false
 }
 
 bpmSlider.addEventListener('input', function (event) {
@@ -274,4 +310,4 @@ bpmSlider.addEventListener('input', function (event) {
 
 playButton.addEventListener('click', play)
 stopButton.addEventListener('click', stop)
-searchButton.addEventListener('click', searchNews)
+searchButton.addEventListener('click', searchNews1)
