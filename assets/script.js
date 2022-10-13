@@ -1,4 +1,8 @@
 //psuedo code
+
+var fetchButton = document.getElementById('fetchButton');
+var artImage = document.querySelector(article)
+
 var charactersArray = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w','x', 'y', 'z']
 //Get all elements from HTML
 var btn = document.getElementById("playButton")
@@ -66,3 +70,18 @@ function stopBeat() {
     clearInterval(bpm);
   }
 
+function getArtApi() {
+  var requestUrl = 'https://collectionapi.metmuseum.org/public/collection/v1/objects';
+
+  fetch(requestUrl)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      for (var i = 0; i < data.length; i++) {
+        var artwork = document.createElement('img');
+        artwork.textContent = data[i].html_url;
+
+      }
+    })
+}
