@@ -1,53 +1,42 @@
 
 var playButton = document.getElementById("playButton")
 var stopButton = document.getElementById("stopButton")
+var searchButton = document.getElementById("search-button")
+var bpmSlider = document.getElementById("bpm-slider")
+var customSearchEl = document.getElementById("search")
+var newsSearchEl = document.getElementById("search-news")
 notes = []
+
 
 
 
 // function searchAPI() {
 
 
-//     var APIKey = ""
-//     var apiURL = "" + city + "&appid=" + APIKey;
-//     //parse readable stream into JSON
-//     fetch(forecastWeatherURL)
-//         .then(function (response) {
-//             if (response.status === 200) {
-//                 return response.json()
-//             }
-//             else if (response.status !== 200) {
-//                 alert('City not found!')
-//             }
-//         })
-//         //retreive data
-//         .then(function (forecast) {
-//             //put data into weather obj
-//             //clear weather array
+function searchNews() {
+    var newsSearchString = newsSearchEl.value
 
-//             weatherArr = []
-//             for (var i = 0; i < 40; i += 8) {
-//                 var weatherObj = {
-//                     date: DateTime.fromSeconds(forecast.list[i].dt).toFormat('LLL dd'),
-//                     city: forecast.city.name,
-//                     temp: Math.round(((forecast.list[i].main.temp - 273.15) * 9 / 5 + 32)) + "°F",
-//                     wind: "Wind Speed " + forecast.list[i].wind.speed,
-//                     humidity: forecast.list[i].main.humidity + "%" + " Humidity",
-//                     condition: forecast.list[i].weather[0].description,
-//                     icon: "https://openweathermap.org/img/wn/" + forecast.list[i].weather[0].icon + "@2x.png",
-//                 }
-
-//                 weatherArr.push(weatherObj)
-
-//             }
+    var APIKey = "46b839ff294f4764ade00a0cb5999dcd"
+    var url = 'https://newsapi.org/v2/everything?' +
+        'q='+ newsSearchString + '&' +
+        'from=2022-10-13&' +
+        'sortBy=popularity&' +
+        'apiKey=' + APIKey;
 
 
+    
+    var req = new Request(url);
 
-var bpmSlider = document.getElementById("bpm-slider")
+    fetch(req)
+        .then(function (response) {
+            console.log(response.json());
+        })
 
-var searchEl = document.getElementById("search")
+
+}
 
 
+//need a few more samples
 const samples = new Tone.ToneAudioBuffers({
     bell: "assets/sounds/bell.wav",
     chime: "assets/sounds/chime.wav",
@@ -70,14 +59,17 @@ const samples = new Tone.ToneAudioBuffers({
 })
 
 function play() {
-    
+
     Tone.Transport.stop()
     Tone.Transport.start()
     playButton.disabled = 'true'
-    
+
+    var customSearchString = customSearchEl.value.split("")
+    notes.push(customSearchString)
+
     const player = new Tone.Player().toDestination();
     player.buffer = samples.get("kick");
-    
+
     const player2 = new Tone.Player().toDestination();
     player2.buffer = samples.get("snare");
 
@@ -89,7 +81,7 @@ function play() {
 
     const player5 = new Tone.Player().toDestination();
     player5.buffer = samples.get("hihat2");
-    
+
     const player6 = new Tone.Player().toDestination();
     player6.buffer = samples.get("hitom");
 
@@ -153,8 +145,7 @@ function play() {
     const player26 = new Tone.Player().toDestination();
     player26.buffer = samples.get("kick");
 
-    var searchString = searchEl.value.split("")
-    notes.push(searchString)
+
 
 
 
@@ -283,3 +274,4 @@ bpmSlider.addEventListener('input', function (event) {
 
 playButton.addEventListener('click', play)
 stopButton.addEventListener('click', stop)
+searchButton.addEventListener('click', searchNews)
