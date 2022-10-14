@@ -1,5 +1,6 @@
 let today = new Date().toISOString().slice(0, 10)
 
+var title 
 var playButton = document.getElementById("playButton")
 var stopButton = document.getElementById("stopButton")
 var searchButton = document.getElementById("search-button")
@@ -30,17 +31,16 @@ function searchNews1() {
     })
         .then(function (response) {
             return response.json()
-
         })
         .then(function (json) {
             var title = json.articles[0].title.toLowerCase().replace(/[^a-z0-9 ]/gi, '').split("")
             notes = (title)
             console.log(title)
+            console.log(json)
         })
 }
 
 function pushNotes(){
-
 }
 // function searchNews() {
 //     var newsSearchString = newsSearchEl.value
@@ -184,9 +184,9 @@ function play() {
     const player26 = new Tone.Player().toDestination();
     player26.buffer = samples.get("kick");
 
+    Tone.Transport.bpm.value = 40;
 
     const seq = new Tone.Sequence(function (time, note) {
-        Tone.Transport.bpm.value = 160;
 
         if (note === 'a') {
             player.start();
