@@ -5,12 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
-    <link href="./assets/style.css" rel="stylesheet">
+    <link href="assets/style.css" rel="stylesheet">
     <title>DataBeats</title>
 </head>
 <body>
 <button id="playButton">play</button>
 <button id="stopButton">stop</button>
+
+<div class="slidecontainer">BPM
+    <input type="range" min="20" max="500" value="20" class="slider" id="bpm-slider">
+  </div>
+
+  
+<input type="search" id="search" placeholder="custom string">
+<input type="search" id="search-news" placeholder="search the news">
+<button id="search-button">search news</button>
+
 
 
 
@@ -18,6 +28,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.48/Tone.js" integrity="sha512-jhAfSzX/sGhuTEnq48xvglsrDI33dNcmsrEbx45YMkd3K0s8eMIeIsgLZav6gQ5xpwMFUioN6iy7YbEOAzzUiA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <script src = './assets/script.js'></script>
+    <!-- <script src = './assets/script.js'></script> -->
+    <script src = './assets/tonescript.js'></script>
 </body>
 </html>
