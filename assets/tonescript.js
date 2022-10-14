@@ -14,17 +14,10 @@ var newsSearchEl = document.getElementById("search-news")
 notes = []
 
 
-
-
-
-console.log(today)
 function searchNews1() {
     var newsSearchString = newsSearchEl.value
     var APIKey = "hjEYIlKUFuYilv8Qo8M-Wsv98rmK9mTxqtSH19k2q-0"
     var url = 'https://api.newscatcherapi.com/v2/search?q=' + newsSearchString
-
-
-
     var req = new Request(url);
 
     fetch(req, {
@@ -33,15 +26,19 @@ function searchNews1() {
         }
     })
         .then(function (response) {
+            if (response.status === 200) {
+                return response.json()
+            }
+            else if (response.status !== 200) {
+                alert('Please enter valid search!')
+            }
             return response.json()
         })
         .then(function (json) {
             headlineEL.innerText = json.articles[0].title
             var title = json.articles[0].title.toLowerCase().replace(/[^a-z0-9 ]/gi, '').split("")
-            notes = (title)
-            console.log(title)
-            console.log(json)
 
+            notes = (title)
         })
 }
 
@@ -57,16 +54,18 @@ function searchNews2() {
 
     fetch('https://dad-jokes.p.rapidapi.com/random/joke', options)
         .then(function (response) {
+            if (response.status === 200) {
+                return response.json()
+            }
+            else if (response.status !== 200) {
+                alert('This is no Joke!')
+            }
             return response.json()
         })
         .then(function (json) {
-            
-           jokeEl.innerText = json.body[0].setup 
-           punchlineEl.innerText = json.body[0].punchline 
+            jokeEl.innerText = json.body[0].setup
+            punchlineEl.innerText = json.body[0].punchline
         })
-
-
-
 }
 
 
@@ -95,6 +94,10 @@ const samples = new Tone.ToneAudioBuffers({
 })
 
 function play() {
+    //dont allow playback with no data in array
+    if (notes.length === 0) {
+        alert("please enter data to make beats")
+    }
 
     Tone.Transport.stop()
     Tone.Transport.start()
