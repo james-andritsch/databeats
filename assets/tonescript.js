@@ -1,9 +1,10 @@
 let today = new Date().toISOString().slice(0, 10)
 
-var title 
+var title
 var playButton = document.getElementById("playButton")
 var stopButton = document.getElementById("stopButton")
 var searchButton = document.getElementById("search-button")
+var searchJoke = document.getElementById("search-joke")
 var bpmSlider = document.getElementById("bpm-slider")
 var customSearchEl = document.getElementById("search")
 var newsSearchEl = document.getElementById("search-news")
@@ -40,33 +41,23 @@ function searchNews1() {
         })
 }
 
-function pushNotes(){
+
+function searchNews2() {
+
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': '32988db04emshc799d9aad1fe669p1bd11ajsn4bd2bcd1ed00',
+            'X-RapidAPI-Host': 'dad-jokes.p.rapidapi.com'
+        }
+    };
+    
+    fetch('https://dad-jokes.p.rapidapi.com/random/joke', options)
+        .then(response => response.json())
+        .then(response => console.log(response))
+        .catch(err => console.error(err));
+    
 }
-// function searchNews() {
-//     var newsSearchString = newsSearchEl.value
-
-//     var APIKey = "46b839ff294f4764ade00a0cb5999dcd"
-//     var url = 'https://newsapi.org/v2/everything?' +
-//         'q=' + newsSearchString + '&' +
-//         'from='+today+'&' +
-//         'sortBy=popularity&' +
-//         'apiKey=' + APIKey;
-
-
-
-//     var req = new Request(url);
-
-//     fetch(req)
-//         .then(function (response) {
-//           console.log(response.json())
-
-//         })
-//         .then(function(){
-
-//         })
-
-
-// }
 
 
 //need a few more samples
@@ -311,3 +302,4 @@ bpmSlider.addEventListener('input', function (event) {
 playButton.addEventListener('click', play)
 stopButton.addEventListener('click', stop)
 searchButton.addEventListener('click', searchNews1)
+searchJoke.addEventListener('click', searchNews2)
