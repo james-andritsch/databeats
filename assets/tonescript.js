@@ -17,7 +17,6 @@ notes = []
 console.log(today)
 function searchNews1() {
     var newsSearchString = newsSearchEl.value
-
     var APIKey = "hjEYIlKUFuYilv8Qo8M-Wsv98rmK9mTxqtSH19k2q-0"
     var url = 'https://api.newscatcherapi.com/v2/search?q=' + newsSearchString
 
@@ -43,7 +42,6 @@ function searchNews1() {
 
 
 function searchNews2() {
-
     const options = {
         method: 'GET',
         headers: {
