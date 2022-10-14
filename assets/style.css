@@ -1,3 +1,62 @@
+.column-row {
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 24px;
+    color: black;
+}
+
+.card-panel {
+    height: 600px;
+}
+
+#lyrics {
+    background-color: #FFEEAD;
+}
+
+#artwork {
+    background-color: #D9534F;
+}
+
+#favoritesCard {
+    background-color: #96CEB4;
+}
+
+body {
+    max-width: 1200px;
+    margin: auto;
+}
+
+#btns {
+   margin: 10px;
+   position: relative;
+   border-color: #F8CB2E;
+   border-style: solid;
+   border-width: thin;
+}
+
+.btn-large {
+    background-color: #006E7F;
+}
+
+nav {
+    margin: 0px;
+    padding: 0px;
+    background-color: #FFAD60;
+}
+
+.nav-wrapper {
+    background-color: #F2D8B3;
+    padding: 0px;
+    margin: 0px;
+    border-color: #F2D8B3;
+}
+
+.column {
+    float: left;
+    width: 33%;
+}
+
 .slidecontainer {
     width: 100%; /* Width of the outside container */
   }

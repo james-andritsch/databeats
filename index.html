@@ -5,13 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  
+    <link href="./assets/style.css" rel="stylesheet">
     <link href="assets/style.css" rel="stylesheet">
     <title>DataBeats</title>
 </head>
-<body>
-<button id="playButton">play</button>
-<button id="stopButton">stop</button>
 
+<body>
+
+  <nav>
+    <h1>Data Beats</h1> 
+  </nav>
 <div class="slidecontainer">BPM
     <input type="range" min="20" max="500" value="20" class="slider" id="bpm-slider">
   </div>
@@ -23,10 +30,45 @@
 
 
 
+  <nav>
+    <div class="nav-wrapper">
+      <form>
+        <div class="input-field">
+          <input id="search" type="search" required>
+          <label class="label-icon" for="search"><i class="material-icons">SEARCH FOR A SONG</i></label>
+          <i class ="material-icons">close</i>
+        </div>
+      </form>
+    </div>
+  </nav> 
 
+  <div id="btns" class="container">
+    <button id="playButton" <a class="btn-floating btn-large"><i class="material-icons">play_arrow</i></a></button>
 
+    <button id="pauseButton" <a class="btn-floating btn-large"><i class="material-icons">pause</i></a></button>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.48/Tone.js" integrity="sha512-jhAfSzX/sGhuTEnq48xvglsrDI33dNcmsrEbx45YMkd3K0s8eMIeIsgLZav6gQ5xpwMFUioN6iy7YbEOAzzUiA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <button id="stopButton" <a class="btn-floating btn-large"><i class="material-icons">stop</i></a></button>  
+  </div>
+
+  <div class="column-row">
+    <div id="lyrics" class="card-panel column">
+      <span>Lyrics
+      </span>
+    </div>
+
+    <div id="artwork" class="card-panel column">
+      <span>Art Display
+      </span>
+    </div>
+
+    <div id="favoritesCard" class="card-panel column">
+      <span> <i class="material-icons">star</i> Favorites</span> 
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.48/Tone.js" integrity="sha512-jhAfSzX/sGhuTEnq48xvglsrDI33dNcmsrEbx45YMkd3K0s8eMIeIsgLZav6gQ5xpwMFUioN6iy7YbEOAzzUiA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src = './assets/script.js'></script>
 
     <!-- <script src = './assets/script.js'></script> -->
     <script src = './assets/tonescript.js'></script>
