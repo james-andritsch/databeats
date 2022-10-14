@@ -1,33 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  
-    <link href="./assets/style.css" rel="stylesheet">
-    <link href="assets/style.css" rel="stylesheet">
-    <title>DataBeats</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+  <link href="./assets/style.css" rel="stylesheet">
+  <link href="assets/style.css" rel="stylesheet">
+  <title>DataBeats</title>
 </head>
 
 <body>
 
   <nav>
-    <h1>Data Beats</h1> 
+    <h1>Data Beats</h1>
   </nav>
-<div class="slidecontainer">BPM
+  <div class="slidecontainer">BPM
     <input type="range" min="20" max="500" value="20" class="slider" id="bpm-slider">
   </div>
 
-  
-<input type="search" id="search" placeholder="custom string">
-<input type="search" id="search-news" placeholder="search the news">
-<button id="search-button">search news</button>
-<button id="search-joke">random joke</button>
+
+  <!-- <input type="search" id="search" placeholder="custom string"> -->
+  <input type="search" id="search-news" placeholder="search the news">
+  <button id="search-button">search news</button>
+  <button id="search-joke">random joke</button>
 
 
 
@@ -36,42 +37,45 @@
       <form>
         <div class="input-field">
           <input id="search" type="search" required>
-          <label class="label-icon" for="search"><i class="material-icons">SEARCH FOR A SONG</i></label>
-          <i class ="material-icons">close</i>
+          <i class="material-icons">close</i>
         </div>
       </form>
     </div>
-  </nav> 
+  </nav>
 
   <div id="btns" class="container">
-    <button id="playButton" <a class="btn-floating btn-large"><i class="material-icons">play_arrow</i></a></button>
+    <button id="playButton" class="btn-floating btn-large"><i class="material-icons">play_arrow</i></button>
 
-    <button id="pauseButton" <a class="btn-floating btn-large"><i class="material-icons">pause</i></a></button>
-
-    <button id="stopButton" <a class="btn-floating btn-large"><i class="material-icons">stop</i></a></button>  
+    <button id="stopButton" class="btn-floating btn-large"><i class="material-icons">stop</i></button>
   </div>
 
   <div class="column-row">
-    <div id="lyrics" class="card-panel column">
-      <span>Lyrics
+    <div id="headline" class="card-panel column">
+      <span id="headline-span">Headline
       </span>
     </div>
 
-    <div id="artwork" class="card-panel column">
-      <span>Art Display
-      </span>
+    <div id="joke" class="card-panel column">
+      <span id="joke-span">Dad Joke</span>
+      <br>
+      <br>
+      <span id ="punchline-span"></span>
+
     </div>
 
     <div id="favoritesCard" class="card-panel column">
-      <span> <i class="material-icons">star</i> Favorites</span> 
+      <span> <i class="material-icons">star</i> Favorites</span>
     </div>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.48/Tone.js" integrity="sha512-jhAfSzX/sGhuTEnq48xvglsrDI33dNcmsrEbx45YMkd3K0s8eMIeIsgLZav6gQ5xpwMFUioN6iy7YbEOAzzUiA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.48/Tone.js"
+    integrity="sha512-jhAfSzX/sGhuTEnq48xvglsrDI33dNcmsrEbx45YMkd3K0s8eMIeIsgLZav6gQ5xpwMFUioN6iy7YbEOAzzUiA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-  <script src = './assets/script.js'></script>
+  <script src='./assets/script.js'></script>
 
-    <!-- <script src = './assets/script.js'></script> -->
-    <script src = './assets/tonescript.js'></script>
+  <!-- <script src = './assets/script.js'></script> -->
+  <script src='./assets/tonescript.js'></script>
 </body>
+
 </html>

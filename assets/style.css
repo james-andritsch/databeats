@@ -10,11 +10,11 @@
     height: 600px;
 }
 
-#lyrics {
+#headline {
     background-color: #FFEEAD;
 }
 
-#artwork {
+#joke {
     background-color: #D9534F;
 }
 
@@ -28,6 +28,8 @@ body {
 }
 
 #btns {
+ 
+    
    margin: 10px;
    position: relative;
    border-color: #F8CB2E;

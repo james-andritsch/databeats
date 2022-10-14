@@ -5,6 +5,9 @@ var playButton = document.getElementById("playButton")
 var stopButton = document.getElementById("stopButton")
 var searchButton = document.getElementById("search-button")
 var searchJoke = document.getElementById("search-joke")
+var headlineEL = document.getElementById("headline-span")
+var jokeEl = document.getElementById("joke-span")
+var punchlineEl = document.getElementById("punchline-span")
 var bpmSlider = document.getElementById("bpm-slider")
 var customSearchEl = document.getElementById("search")
 var newsSearchEl = document.getElementById("search-news")
@@ -33,10 +36,12 @@ function searchNews1() {
             return response.json()
         })
         .then(function (json) {
+            headlineEL.innerText = json.articles[0].title
             var title = json.articles[0].title.toLowerCase().replace(/[^a-z0-9 ]/gi, '').split("")
             notes = (title)
             console.log(title)
             console.log(json)
+
         })
 }
 
@@ -49,12 +54,19 @@ function searchNews2() {
             'X-RapidAPI-Host': 'dad-jokes.p.rapidapi.com'
         }
     };
-    
+
     fetch('https://dad-jokes.p.rapidapi.com/random/joke', options)
-        .then(response => response.json())
-        .then(response => console.log(response))
-        .catch(err => console.error(err));
-    
+        .then(function (response) {
+            return response.json()
+        })
+        .then(function (json) {
+            
+           jokeEl.innerText = json.body[0].setup 
+           punchlineEl.innerText = json.body[0].punchline 
+        })
+
+
+
 }
 
 
@@ -92,8 +104,8 @@ function play() {
 
     //get input value from custom search and 'split' string into individual letters
     //push them into notes array
-    // var customSearchString = customSearchEl.value.toLowerCase().split("")
-    // notes.push(customSearchString)
+    var customSearchString = customSearchEl.value.toLowerCase().split("")
+    notes.push(customSearchString)
 
     const player = new Tone.Player().toDestination();
     player.buffer = samples.get("kick");
