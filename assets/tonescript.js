@@ -5,14 +5,15 @@ var playButton = document.getElementById("playButton")
 var stopButton = document.getElementById("stopButton")
 var searchButton = document.getElementById("search-button")
 var searchJoke = document.getElementById("search-joke")
+var limitArray = document.getElementById("limit-array")
 var headlineEL = document.getElementById("headline-span")
 var jokeEl = document.getElementById("joke-span")
 var punchlineEl = document.getElementById("punchline-span")
 var bpmSlider = document.getElementById("bpm-slider")
 var customSearchEl = document.getElementById("search")
 var newsSearchEl = document.getElementById("search-news")
-notes = []
-
+var notes = []
+var players = []
 
 function searchNews1() {
     var newsSearchString = newsSearchEl.value
@@ -20,56 +21,67 @@ function searchNews1() {
     var url = 'https://api.newscatcherapi.com/v2/search?q=' + newsSearchString
     var req = new Request(url);
 
-    fetch(req, {
-        headers: {
-            'x-api-key': APIKey
-        }
-    })
-        .then(function (response) {
-            if (response.status === 200) {
-                return response.json()
-            }
-            else if (response.status !== 200) {
-                alert('Please enter valid search!')
-            }
-            return response.json()
-        })
-        .then(function (json) {
-            headlineEL.innerText = json.articles[0].title
-            var title = json.articles[0].title.toLowerCase().replace(/[^a-z0-9 ]/gi, '').split("")
+//     fetch(req, {
+//         headers: {
+//             'x-api-key': APIKey
+//         }
+//     })
+//         .then(function (response) {
+//             if (response.status === 200) {
+//                 return response.json()
+//             }
+//             else if (response.status !== 200) {
+//                 alert('Please enter valid search!')
+//             }
+//             return response.json()
+//         })
+//         .then(function (json) {
+//             headlineEL.innerText = json.articles[0].title
+//             var title = json.articles[0].title.toLowerCase().replace(/[^a-z0-9 ]/gi, '').split("")
+//             console.log(title)
+//             notes = (title)
+//         })
+// }
 
-            notes = (title)
-        })
+// function searchNews2() {
+//     const options = {
+//         method: 'GET',
+//         headers: {
+//             'X-RapidAPI-Key': '32988db04emshc799d9aad1fe669p1bd11ajsn4bd2bcd1ed00',
+//             'X-RapidAPI-Host': 'dad-jokes.p.rapidapi.com'
+//         }
+//     };
+
+//     fetch('https://dad-jokes.p.rapidapi.com/random/joke', options)
+//         .then(function (response) {
+//             if (response.status === 200) {
+//                 return response.json()
+//             }
+//             else if (response.status !== 200) {
+//                 alert('This is no Joke!')
+//             }
+//             return response.json()
+//         })
+//         .then(function (json) {
+// //char codes 97-122
+// console.log(json)
+//             var title = json.body[0].setup.toLowerCase().replace(/[^a-z0-9 ]/gi, '') +
+//                 json.body[0].punchline.toLowerCase().replace(/[^a-z0-9 ]/gi, '')
+
+//              var titleInt = new TextEncoder().encode(title)
+//              console.log(titleInt)
+//             notes = (titleInt)
+//             console.log(notes)
+//             jokeEl.innerText = json.body[0].setup
+//             punchlineEl.innerText = json.body[0].punchline
+//         })
+// }
+
+function limitNotes() {
+    notes.length = 15;
+    console.log('hey')
+    console.log(notes.length)
 }
-
-
-function searchNews2() {
-    const options = {
-        method: 'GET',
-        headers: {
-            'X-RapidAPI-Key': '32988db04emshc799d9aad1fe669p1bd11ajsn4bd2bcd1ed00',
-            'X-RapidAPI-Host': 'dad-jokes.p.rapidapi.com'
-        }
-    };
-
-    fetch('https://dad-jokes.p.rapidapi.com/random/joke', options)
-        .then(function (response) {
-            if (response.status === 200) {
-                return response.json()
-            }
-            else if (response.status !== 200) {
-                alert('This is no Joke!')
-            }
-            return response.json()
-        })
-        .then(function (json) {
-            jokeEl.innerText = json.body[0].setup
-            punchlineEl.innerText = json.body[0].punchline
-        })
-}
-
-
-//need a few more samples
 
 
 const samples = new Tone.ToneAudioBuffers({
@@ -85,18 +97,32 @@ const samples = new Tone.ToneAudioBuffers({
     hitom: "assets/sounds/hitom.wav",
     kick: "assets/sounds/kick.wav",
     kick2: "assets/sounds/kick2.wav",
+    kick3: "assets/sounds/kick3.wav",
+    kick4: "assets/sounds/kick4.wav",
+    kick5: "assets/sounds/kick5.wav",
+    kick6: "assets/sounds/kick6.wav",
     lowtom: "assets/sounds/lowtom.wav",
     rimshot: "assets/sounds/rimshot.wav",
     shaker: "assets/sounds/shaker.wav",
     snare: "assets/sounds/snare.wav",
+    snare2: "assets/sounds/snare2.wav",
+    snare3: "assets/sounds/snare3.wav",
+    snare4: "assets/sounds/snare4.wav",
     tambourine: "assets/sounds/tambourine.wav",
-
+    woodblock: "assets/sounds/woodblock.wav",
+    splash: "assets/sounds/splash.wav",
 })
 
-function play() {
+
+
+function play(time) {
     //dont allow playback with no data in array
-    if (notes.length === 0) {
-        alert("please enter data to make beats")
+    for (i = 0; i < notes.length; i++) {
+        const player = new Tone.Player().toDestination();
+        player.buffer = samples.get(Object.keys(samples)[i]);
+        players.push(player)
+        console.log(players)
+        console.log(i)
     }
 
     Tone.Transport.stop()
@@ -104,11 +130,20 @@ function play() {
 
     //only allow one playback?
     playButton.disabled = true
+    //for (a-z) or (0-25)
+
+
 
     //get input value from custom search and 'split' string into individual letters
     //push them into notes array
     var customSearchString = customSearchEl.value.toLowerCase().split("")
     notes.push(customSearchString)
+    //var searchStringInt = new TextEncoder().encode(customSearchString)
+
+    //console.log(searchStringInt)
+    if (notes.length === 0) {
+        alert("please enter data to make beats")
+    }
 
     const player = new Tone.Player().toDestination();
     player.buffer = samples.get("kick");
@@ -162,35 +197,38 @@ function play() {
     player17.buffer = samples.get("cymbal3");
 
     const player18 = new Tone.Player().toDestination();
-    player18.buffer = samples.get("kick");
+    player18.buffer = samples.get("kick3");
 
     const player19 = new Tone.Player().toDestination();
-    player19.buffer = samples.get("kick");
+    player19.buffer = samples.get("kick4");
 
     const player20 = new Tone.Player().toDestination();
-    player20.buffer = samples.get("kick");
+    player20.buffer = samples.get("kick5");
 
     const player21 = new Tone.Player().toDestination();
-    player21.buffer = samples.get("kick");
+    player21.buffer = samples.get("kick6");
 
     const player22 = new Tone.Player().toDestination();
-    player22.buffer = samples.get("kick");
+    player22.buffer = samples.get("snare2");
 
     const player23 = new Tone.Player().toDestination();
-    player23.buffer = samples.get("kick");
+    player23.buffer = samples.get("snare3");
 
     const player24 = new Tone.Player().toDestination();
-    player24.buffer = samples.get("kick");
+    player24.buffer = samples.get("snare4");
 
     const player25 = new Tone.Player().toDestination();
-    player25.buffer = samples.get("kick");
+    player25.buffer = samples.get("splash");
 
     const player26 = new Tone.Player().toDestination();
-    player26.buffer = samples.get("kick");
+    player26.buffer = samples.get("woodblock");
 
     Tone.Transport.bpm.value = 40;
 
     const seq = new Tone.Sequence(function (time, note) {
+
+        // players[notes].start();
+        // players[notes].stop("+0.5");
 
         if (note === 'a') {
             player.start();
@@ -301,6 +339,8 @@ function play() {
         console.log(note)
     }, notes).start(0);
     console.log(notes)
+
+
 }
 
 function stop() {
@@ -314,5 +354,6 @@ bpmSlider.addEventListener('input', function (event) {
 
 playButton.addEventListener('click', play)
 stopButton.addEventListener('click', stop)
-searchButton.addEventListener('click', searchNews1)
-searchJoke.addEventListener('click', searchNews2)
+// searchButton.addEventListener('click', searchNews1)
+// searchJoke.addEventListener('click', searchNews2)
+limitArray.addEventListener('click', limitNotes)
