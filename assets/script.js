@@ -6,6 +6,7 @@ var stopButton = document.getElementById("stop-button")
 var searchButton = document.getElementById("search-button")
 var saveButton = document.getElementById("save-button")
 var notes 
+var favorites = document.getElementById("saves")
 var searchJoke = document.getElementById("search-joke")
 var limitArray = document.getElementById("limit-array")
 var headlineEL = document.getElementById("headline-span")
@@ -186,9 +187,11 @@ lengthSlider.addEventListener('input', function (event){
 
 function save () {
     console.log("click")
-    localStorage.setItem("save", customSearchEl.value)
-    
-    
+    localStorage.setItem(customSearchEl.value, customSearchEl.value)
+    var button = document.createElement("button")
+    button.textContent = customSearchEl.value
+    favorites.appendChild(button);
+
 }
 
 
