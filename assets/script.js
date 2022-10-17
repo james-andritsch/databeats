@@ -5,6 +5,7 @@ var playButton = document.getElementById("play-button")
 var stopButton = document.getElementById("stop-button")
 var searchButton = document.getElementById("search-button")
 var saveButton = document.getElementById("save-button")
+var notes 
 var searchJoke = document.getElementById("search-joke")
 var limitArray = document.getElementById("limit-array")
 var headlineEL = document.getElementById("headline-span")
@@ -142,7 +143,7 @@ function play(resetSeq) {
     playButton.disabled = true
 
     
-    var notes = customSearchEl.value.toLowerCase().split("")
+    notes = customSearchEl.value.toLowerCase().split("")
     console.log(notes)
     if (notes.length === 0) {
         alert("please enter data to make beats")
@@ -183,11 +184,18 @@ lengthSlider.addEventListener('input', function (event){
     resetSeq = lengthSlider.value
 })
 
+function save () {
+    console.log("click")
+    localStorage.setItem("save", customSearchEl.value)
+    
+    
+}
+
 
 playButton.addEventListener('click', play)
 stopButton.addEventListener('click', stop)
 // searchButton.addEventListener('click', searchNews1)
 // searchJoke.addEventListener('click', searchNews2)
 limitArray.addEventListener('click', limitNotes)
-
+saveButton.addEventListener('click', save)
 
