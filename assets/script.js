@@ -10,12 +10,15 @@ var headlineEL = document.getElementById("headline-span")
 var jokeEl = document.getElementById("joke-span")
 var punchlineEl = document.getElementById("punchline-span")
 var bpmSlider = document.getElementById("bpm-slider")
+var lengthSlider = document.getElementById("length-slider")
 var customSearchEl = document.getElementById("search")
 var newsSearchEl = document.getElementById("search-news")
 var players = []
 var limitNotes
+var resetSeq
 
-var dist = new Tone.Distortion(0.8).toDestination();
+
+var dist = new Tone.Distortion(0.3).toDestination();
 
 
 
@@ -127,12 +130,12 @@ for (i = 0; i < pathNames.length; i++) {
     players.push(player)
 }
 
-function play() {
+function play(resetSeq) {
     Tone.Transport.stop()
     Tone.Transport.start()
     
-
-    Tone.Transport.swing.value = 0
+    console.log(lengthSlider.value)
+    Tone.Transport.swing.value = 1
     Tone.Transport.bpm.value = 200;
     playButton.disabled = true
 
@@ -148,13 +151,14 @@ function play() {
     function playNote(time, note) {
         var player = players[getPlayersIndex(note)]
         player.start(time)
-        
-        
     }
 
     console.log(notes.length)
     //taking notes, iterating through, and passing each note to function
     var seq = new Tone.Sequence(playNote, notes, "4n").start(0);
+    seq.probability = 1
+    seq.length = lengthSlider.value
+    console.log(resetSeq)
 }
 
 function getPlayersIndex(note) {
@@ -171,6 +175,11 @@ function stop() {
 bpmSlider.addEventListener('input', function (event) {
     Tone.Transport.bpm.rampTo(+event.target.value, 0.1)
 })
+
+lengthSlider.addEventListener('input', function (event){
+    resetSeq = lengthSlider.value
+})
+
 
 playButton.addEventListener('click', play)
 stopButton.addEventListener('click', stop)
