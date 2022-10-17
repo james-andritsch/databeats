@@ -1,8 +1,8 @@
 let today = new Date().toISOString().slice(0, 10)
 
 var title
-var playButton = document.getElementById("playButton")
-var stopButton = document.getElementById("stopButton")
+var playButton = document.getElementById("play-button")
+var stopButton = document.getElementById("stop-button")
 var searchButton = document.getElementById("search-button")
 var searchJoke = document.getElementById("search-joke")
 var limitArray = document.getElementById("limit-array")
@@ -16,7 +16,7 @@ var newsSearchEl = document.getElementById("search-news")
 var players = []
 var limitNotes
 var resetSeq
-
+var notes
 
 var dist = new Tone.Distortion(0.3).toDestination();
 
@@ -141,9 +141,12 @@ function play(resetSeq) {
 
     
     var notes = customSearchEl.value.toLowerCase().split("")
+    
+    
     if (notes.length === 0) {
         alert("please enter data to make beats")
     }
+    
     if (limitNotes === true) {
         notes = notes.slice(15)
     }
@@ -151,19 +154,24 @@ function play(resetSeq) {
     function playNote(time, note) {
         var player = players[getPlayersIndex(note)]
         player.start(time)
+        
     }
 
-    console.log(notes.length)
+    
     //taking notes, iterating through, and passing each note to function
     var seq = new Tone.Sequence(playNote, notes, "4n").start(0);
     seq.probability = 1
     seq.length = lengthSlider.value
-    console.log(resetSeq)
+   
 }
+
+console.log(customSearchEl.value)
 
 function getPlayersIndex(note) {
     var searchStringInt = new TextEncoder().encode(note)
     return searchStringInt - 97
+    
+    
     
 }
 
@@ -178,6 +186,7 @@ bpmSlider.addEventListener('input', function (event) {
 
 lengthSlider.addEventListener('input', function (event){
     resetSeq = lengthSlider.value
+    console.log(lengthSlider.value)
 })
 
 
@@ -185,4 +194,4 @@ playButton.addEventListener('click', play)
 stopButton.addEventListener('click', stop)
 // searchButton.addEventListener('click', searchNews1)
 // searchJoke.addEventListener('click', searchNews2)
-limitArray.addEventListener('click', limitNotes)
+// limitArray.addEventListener('click', limitNotes)
