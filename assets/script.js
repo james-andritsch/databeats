@@ -141,6 +141,7 @@ function play(resetSeq) {
 
     
     var notes = customSearchEl.value.toLowerCase().split("")
+    console.log(notes)
     if (notes.length === 0) {
         alert("please enter data to make beats")
     }
@@ -164,7 +165,7 @@ function play(resetSeq) {
 function getPlayersIndex(note) {
     var searchStringInt = new TextEncoder().encode(note)
     return searchStringInt - 97
-    
+    console.log(searchStringInt)
 }
 
 function stop() {
@@ -186,3 +187,5 @@ stopButton.addEventListener('click', stop)
 // searchButton.addEventListener('click', searchNews1)
 // searchJoke.addEventListener('click', searchNews2)
 limitArray.addEventListener('click', limitNotes)
+
+
