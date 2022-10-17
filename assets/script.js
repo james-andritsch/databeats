@@ -1,9 +1,10 @@
 let today = new Date().toISOString().slice(0, 10)
 
 var title
-var playButton = document.getElementById("playButton")
-var stopButton = document.getElementById("stopButton")
+var playButton = document.getElementById("play-button")
+var stopButton = document.getElementById("stop-button")
 var searchButton = document.getElementById("search-button")
+var saveButton = document.getElementById("save-button")
 var searchJoke = document.getElementById("search-joke")
 var limitArray = document.getElementById("limit-array")
 var headlineEL = document.getElementById("headline-span")
@@ -16,6 +17,7 @@ var newsSearchEl = document.getElementById("search-news")
 var players = []
 var limitNotes
 var resetSeq
+
 
 
 var dist = new Tone.Distortion(0.3).toDestination();
