@@ -117,13 +117,7 @@ const samples = new Tone.ToneAudioBuffers({
 
 function play(time) {
     //dont allow playback with no data in array
-    for (i = 0; i < notes.length; i++) {
-        const player = new Tone.Player().toDestination();
-        player.buffer = samples.get(Object.keys(samples)[i]);
-        players.push(player)
-        console.log(players)
-        console.log(i)
-    }
+  
 
     Tone.Transport.stop()
     Tone.Transport.start()

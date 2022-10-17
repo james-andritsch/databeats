@@ -15,6 +15,14 @@ var newsSearchEl = document.getElementById("search-news")
 var players = []
 var limitNotes
 
+var dist = new Tone.Distortion(0.8).toDestination();
+
+
+
+
+//var feedbackDelay = new Tone.FeedbackDelay("4n", 0.25).toDestination();
+
+
 // function searchNews1() {
 //     var newsSearchString = newsSearchEl.value
 //     var APIKey = "hjEYIlKUFuYilv8Qo8M-Wsv98rmK9mTxqtSH19k2q-0"
@@ -81,69 +89,78 @@ function setLimitNotes() {
     limitNotes = true
 }
 
+
 const paths = {
-    bell: "assets/sounds/bell.wav",
-    chime: "assets/sounds/chime.wav",
-    clap: "assets/sounds/clap.wav",
-    conga: "assets/sounds/conga.wav",
-    cymbal1: "assets/sounds/cymbal1.wav",
-    cymbal2: "assets/sounds/cymbal2.wav",
-    cymbal3: "assets/sounds/cymbal3.wav",
-    hihat2: "assets/sounds/hihat2.wav",
-    hihat3: "assets/sounds/hihat3.mp3",
-    hitom: "assets/sounds/hitom.wav",
-    kick: "assets/sounds/kick.wav",
-    kick2: "assets/sounds/kick2.wav",
-    kick3: "assets/sounds/kick3.wav",
-    kick4: "assets/sounds/kick4.wav",
-    kick5: "assets/sounds/kick5.wav",
-    kick6: "assets/sounds/kick6.wav",
-    lowtom: "assets/sounds/lowtom.wav",
-    rimshot: "assets/sounds/rimshot.wav",
-    shaker: "assets/sounds/shaker.wav",
-    snare: "assets/sounds/snare.wav",
-    snare2: "assets/sounds/snare2.wav",
-    snare3: "assets/sounds/snare3.wav",
-    snare4: "assets/sounds/snare4.wav",
-    tambourine: "assets/sounds/tambourine.wav",
-    woodblock: "assets/sounds/woodblock.wav",
-    splash: "assets/sounds/splash.wav",
+    block: "assets/sounds/909/block.WAV",
+    clap: "assets/sounds/909/clap.WAV",
+    clap2: "assets/sounds/909/clap2.WAV",
+    crash: "assets/sounds/909/crash.WAV",
+    crash2: "assets/sounds/909/crash2.WAV",
+    hat1: "assets/sounds/909/hat1.WAV",
+    hat2: "assets/sounds/909/hat2.WAV",
+    hat3: "assets/sounds/909/hat3.WAV",
+    hat4: "assets/sounds/909/hat4.WAV",
+    hat5: "assets/sounds/909/hat5.WAV",
+    hightom: "assets/sounds/909/hightom.WAV",
+    kick1: "assets/sounds/909/kick1.WAV",
+    kick2: "assets/sounds/909/kick2.WAV",
+    kick3: "assets/sounds/909/kick3.WAV",
+    kick4: "assets/sounds/909/kick4.WAV",
+    lowtom: "assets/sounds/909/lowtom.WAV",
+    midtom: "assets/sounds/909/midtom.WAV",
+    ride1: "assets/sounds/909/ride1.WAV",
+    ride2: "assets/sounds/909/ride2.WAV",
+    rimshot: "assets/sounds/909/rimshot.WAV",
+    snare1: "assets/sounds/909/snare1.WAV",
+    snare2: "assets/sounds/909/snare2.WAV",
+    snare3: "assets/sounds/909/snare3.WAV",
+    snare4: "assets/sounds/909/snare4.WAV",
+    splash: "assets/sounds/909/splash.WAV",
+    tom: "assets/sounds/909/tom.WAV",
 }
 
 var pathNames = Object.keys(paths)
 
 for (i = 0; i < pathNames.length; i++) {
-    const player = new Tone.Player(paths[pathNames[i]]).toDestination();
+    // const player = new Tone.Player(paths[pathNames[i]]).toDestination();
+    const player = new Tone.Player(paths[pathNames[i]]).connect(dist);
     players.push(player)
 }
 
 function play() {
+    Tone.Transport.stop()
+    Tone.Transport.start()
+    
 
+    Tone.Transport.swing.value = 0
+    Tone.Transport.bpm.value = 200;
+    playButton.disabled = true
+
+    
+    var notes = customSearchEl.value.toLowerCase().split("")
     if (notes.length === 0) {
         alert("please enter data to make beats")
     }
-    Tone.Transport.stop()
-    Tone.Transport.start()
-    Tone.Transport.bpm.value = 40;
-    playButton.disabled = true
-
-    var notes = customSearchEl.value.toLowerCase().split("")
-
-    if (limitNotes === true ){
-        notes = notes.slice(16)
+    if (limitNotes === true) {
+        notes = notes.slice(15)
     }
-
+    
     function playNote(time, note) {
         var player = players[getPlayersIndex(note)]
-        player.start()
+        player.start(time)
+        
+        
     }
-//taking notes, iterating through, and passing each note to function
+
+    console.log(notes.length)
+    //taking notes, iterating through, and passing each note to function
     var seq = new Tone.Sequence(playNote, notes, "4n").start(0);
 }
 
 function getPlayersIndex(note) {
     var searchStringInt = new TextEncoder().encode(note)
     return searchStringInt - 97
+    
 }
 
 function stop() {
