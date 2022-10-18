@@ -25,25 +25,31 @@
     <input type="range" min="20" max="500" value="20" class="slider" id="bpm-slider">
   </div>
 
-  <div class="slidecontainer">Length
-    <input type="range" min="1" max="16" value="8" class="slider" id="length-slider">
+  <div class="slidecontainer">Loop Start
+    <input type="range" min="1" max="16" value="8" class="slider" id="loop-start-slider">
   </div>
+
+  <div class="slidecontainer">Loop End
+    <input type="range" min="1" max="16" value="8" class="slider" id="loop-end-slider">
+  </div>
+
+
 
 
   <!-- <input type="search" id="search" placeholder="custom string"> -->
   <button id="search-joke" class="waves-effect waves-light btn">Random Joke</button>
   <button id="search-archives" class="waves-effect waves-light btn">Search Archives</button>
- 
 
-<div class="bg"></div>
-<div class="bg bg2"></div>
-<div class="bg bg3"></div>
+
+  <div class="bg"></div>
+  <div class="bg bg2"></div>
+  <div class="bg bg3"></div>
 
   <nav>
     <div class="nav-wrapper">
       <form>
         <div class="input-field">
-          <input placeholder = "Enter Custom String or Search Archives"id="search" type="search" required>
+          <input placeholder="Enter Custom String or Search Archives" id="search" type="search" required>
           <i class="material-icons">clear</i>
         </div>
       </form>

@@ -11,7 +11,8 @@ var headlineEL = document.getElementById("headline-span")
 var jokeEl = document.getElementById("joke-span")
 var punchlineEl = document.getElementById("punchline-span")
 var bpmSlider = document.getElementById("bpm-slider")
-var lengthSlider = document.getElementById("length-slider")
+var loopEndSlider = document.getElementById("loop-end-slider")
+var loopStartSlider = document.getElementById("loop-start-slider")
 var customSearchEl = document.getElementById("search")
 var newsSearchEl = document.getElementById("search-news")
 var players = []
@@ -77,9 +78,7 @@ console.log(json)
             var title = json.body[0].setup.toLowerCase().replace(/[^a-z0-9 ]/gi, '') +
                 json.body[0].punchline.toLowerCase().replace(/[^a-z0-9 ]/gi, '')
 
-             var titleInt = new TextEncoder().encode(title)
-            notes = (titleInt)
-            
+            notes = title.split("")
             jokeEl.innerText = json.body[0].setup
             punchlineEl.innerText = json.body[0].punchline
         })
@@ -207,13 +206,19 @@ bpmSlider.addEventListener('input', function (event) {
     Tone.Transport.bpm.rampTo(+event.target.value, 0.1)
 })
 
-lengthSlider.addEventListener('input', function (event){
+loopEndSlider.addEventListener('input', function (event){
     seq.set({
-        loopEnd: +lengthSlider.value       
+        loopEnd: +loopEndSlider.value       
     })  
-    console.log(lengthSlider.value)
+    console.log(loopEndSlider.value)
 })
 
+loopStartSlider.addEventListener('input', function (event){
+    seq.set({
+        loopStart: +loopStartSlider.value       
+    })  
+    console.log(loopStartSlider.value)
+})
 
 playButton.addEventListener('click', play)
 stopButton.addEventListener('click', stop)
