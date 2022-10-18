@@ -102,11 +102,12 @@ function searchNews3(){
             return response.json()
         })
         .then(function (json) {
-            //
+            customSearchEl.value = ''
             var title = json[1][0].toLowerCase().replace(/[^a-z ]/gi, '')
             notes = title.split("")
             headlineEL.innerText = json[1][0]
             console.log(title)
+            console.log(notes)
            
         })
 
@@ -156,7 +157,7 @@ for (i = 0; i < pathNames.length; i++) {
 //function to start playing sequence
 function play() {
     //clear notes array
-    notes = ''
+    //notes = ''
     Tone.Transport.stop()
     Tone.Transport.start()
     
@@ -219,4 +220,4 @@ stopButton.addEventListener('click', stop)
 //searchButton.addEventListener('click', searchNews1)
 searchJoke.addEventListener('click', searchNews2)
 searchArchives.addEventListener('click', searchNews3)
-// limitArray.addEventListener('click', limitNotes)
+
