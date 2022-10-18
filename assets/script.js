@@ -190,9 +190,16 @@ function save () {
     localStorage.setItem(customSearchEl.value, customSearchEl.value)
     var button = document.createElement("button")
     button.textContent = customSearchEl.value
+    button.addEventListener("click", function() {
+        var repopulate = localStorage.getItem(button.textContent)
+        console.log(repopulate)
+        customSearchEl.value = repopulate
+    })
     favorites.appendChild(button);
 
 }
+
+
 
 
 playButton.addEventListener('click', play)
