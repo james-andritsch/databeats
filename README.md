@@ -1,5 +1,5 @@
 ## Description
-
+As a music-lover, I want turn text into beats.
 
 ## Table of Contents
 * [Technologies](#Technologies)
