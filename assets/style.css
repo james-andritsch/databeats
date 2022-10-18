@@ -30,10 +30,10 @@ body {
 
 #btns {
     display: flex;
-    justify-content: center;
+    justify-content: left;
     margin: 10px;
-    position: relative;
-    border: none;
+    position: center;
+   
 }
 
 .btn-large {
@@ -54,14 +54,16 @@ nav {
 }
 
 .column {
+    margin: 5px;
     float: left;
-    width: 33%;
+    width: 32%;
 }
 
 .slidecontainer {
     width: 100%;
     /* Width of the outside container */
     outline: none;
+    border: none;
 }
 
 /* The slider itself */

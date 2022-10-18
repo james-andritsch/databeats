@@ -25,7 +25,7 @@ var seq
 
 
 // function searchNews1() {
-//     var newsSearchString = newsSearchEl.value
+//     var customSearchString = customSearchEl.value
 //     var APIKey = "hjEYIlKUFuYilv8Qo8M-Wsv98rmK9mTxqtSH19k2q-0"
 //     var url = 'https://api.newscatcherapi.com/v2/search?q=' + newsSearchString
 //     var req = new Request(url);
@@ -86,9 +86,9 @@ console.log(json)
 }
 
 function searchNews3(){
-    var newsSearchString = newsSearchEl.value
+    var customSearchString = customSearchEl.value
     
-    var url = 'https://chroniclingamerica.loc.gov/suggest/titles/?q=' + newsSearchString  
+    var url = 'https://chroniclingamerica.loc.gov/suggest/titles/?q=' + customSearchString  
     var req = new Request(url);
 
     fetch(req)
