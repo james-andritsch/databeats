@@ -9,6 +9,7 @@ var clearButton = document.getElementById("clear-button")
 var notes 
 var favorites = document.getElementById("saves")
 var searchJoke = document.getElementById("search-joke")
+var searchArchives = document.getElementById("search-archives")
 var limitArray = document.getElementById("limit-array")
 var headlineEL = document.getElementById("headline-span")
 var jokeEl = document.getElementById("joke-span")
@@ -20,14 +21,11 @@ var newsSearchEl = document.getElementById("search-news")
 var players = []
 var limitNotes
 var resetSeq
-
+var notes
 
 
 var dist = new Tone.Distortion(0.3).toDestination();
-
-
-
-
+var seq
 //var feedbackDelay = new Tone.FeedbackDelay("4n", 0.25).toDestination();
 
 
@@ -59,40 +57,65 @@ var dist = new Tone.Distortion(0.3).toDestination();
 //         })
 // }
 
-// function searchNews2() {
-//     const options = {
-//         method: 'GET',
-//         headers: {
-//             'X-RapidAPI-Key': '32988db04emshc799d9aad1fe669p1bd11ajsn4bd2bcd1ed00',
-//             'X-RapidAPI-Host': 'dad-jokes.p.rapidapi.com'
-//         }
-//     };
+function searchNews2() {
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': '32988db04emshc799d9aad1fe669p1bd11ajsn4bd2bcd1ed00',
+            'X-RapidAPI-Host': 'dad-jokes.p.rapidapi.com'
+        }
+    };
 
-//     fetch('https://dad-jokes.p.rapidapi.com/random/joke', options)
-//         .then(function (response) {
-//             if (response.status === 200) {
-//                 return response.json()
-//             }
-//             else if (response.status !== 200) {
-//                 alert('This is no Joke!')
-//             }
-//             return response.json()
-//         })
-//         .then(function (json) {
-// //char codes 97-122
-// console.log(json)
-//             var title = json.body[0].setup.toLowerCase().replace(/[^a-z0-9 ]/gi, '') +
-//                 json.body[0].punchline.toLowerCase().replace(/[^a-z0-9 ]/gi, '')
+    fetch('https://dad-jokes.p.rapidapi.com/random/joke', options)
+        .then(function (response) {
+            if (response.status === 200) {
+                return response.json()
+            }
+            else if (response.status !== 200) {
+                alert('This is no Joke!')
+            }
+            return response.json()
+        })
+        .then(function (json) {
 
-//              var titleInt = new TextEncoder().encode(title)
-//              console.log(titleInt)
-//             notes = (titleInt)
-//             console.log(notes)
-//             jokeEl.innerText = json.body[0].setup
-//             punchlineEl.innerText = json.body[0].punchline
-//         })
-// }
+console.log(json)
+            var title = json.body[0].setup.toLowerCase().replace(/[^a-z0-9 ]/gi, '') +
+                json.body[0].punchline.toLowerCase().replace(/[^a-z0-9 ]/gi, '')
 
+             var titleInt = new TextEncoder().encode(title)
+            notes = (titleInt)
+            
+            jokeEl.innerText = json.body[0].setup
+            punchlineEl.innerText = json.body[0].punchline
+        })
+}
+
+function searchNews3(){
+    var newsSearchString = newsSearchEl.value
+    
+    var url = 'https://chroniclingamerica.loc.gov/suggest/titles/?q=' + newsSearchString  
+    var req = new Request(url);
+
+    fetch(req)
+        .then(function (response) {
+            if (response.status === 200) {
+                return response.json()
+            }
+            else if (response.status !== 200) {
+                alert('Please enter valid search!')
+            }
+            return response.json()
+        })
+        .then(function (json) {
+            var title = json[1][0].toLowerCase().replace(/[^a-z ]/gi, '')
+           // var titleInt = new TextEncoder().encode(title)
+            notes = title.split("")
+            headlineEL.innerText = json[1][0]
+            console.log(title)
+           
+        })
+
+}
 function setLimitNotes() {
     limitNotes = true
 }
@@ -135,42 +158,52 @@ for (i = 0; i < pathNames.length; i++) {
     players.push(player)
 }
 
-function play(resetSeq) {
+function play() {
+    notes = ''
     Tone.Transport.stop()
     Tone.Transport.start()
     
-    console.log(lengthSlider.value)
+ 
     Tone.Transport.swing.value = 1
     Tone.Transport.bpm.value = 200;
     playButton.disabled = true
 
+    if (customSearchEl.value){
+        notes = customSearchEl.value.toLowerCase().split("")
+    }
     
-    notes = customSearchEl.value.toLowerCase().split("")
+    
     console.log(notes)
+    
     if (notes.length === 0) {
         alert("please enter data to make beats")
     }
-    if (limitNotes === true) {
-        notes = notes.slice(15)
-    }
+    
     
     function playNote(time, note) {
         var player = players[getPlayersIndex(note)]
         player.start(time)
     }
 
-    console.log(notes.length)
+    
     //taking notes, iterating through, and passing each note to function
-    var seq = new Tone.Sequence(playNote, notes, "4n").start(0);
-    seq.probability = 1
-    seq.length = lengthSlider.value
-    console.log(resetSeq)
+    seq = new Tone.Sequence(playNote, notes, "4n").start(0);
+   
+    seq.set({
+        probability: 1,
+    })
+        
+    
+   
 }
 
+console.log(customSearchEl.value)
+
 function getPlayersIndex(note) {
-    var searchStringInt = new TextEncoder().encode(note)
+    
+    var searchStringInt = new TextEncoder().encode(note);
     return searchStringInt - 97
-    console.log(searchStringInt)
+
 }
 
 function stop() {
@@ -183,7 +216,10 @@ bpmSlider.addEventListener('input', function (event) {
 })
 
 lengthSlider.addEventListener('input', function (event){
-    resetSeq = lengthSlider.value
+    seq.set({
+        loopEnd: +lengthSlider.value       
+    })  
+    console.log(lengthSlider.value)
 })
 
 function save () {
@@ -207,9 +243,14 @@ playButton.addEventListener('click', play)
 stopButton.addEventListener('click', stop)
 // searchButton.addEventListener('click', searchNews1)
 // searchJoke.addEventListener('click', searchNews2)
-limitArray.addEventListener('click', limitNotes)
+// limitArray.addEventListener('click', limitNotes)
+
 saveButton.addEventListener('click', save)
 clearButton.addEventListener('click', function() {
     customSearchEl.value = ""
 })
 
+//searchButton.addEventListener('click', searchNews1)
+searchJoke.addEventListener('click', searchNews2)
+searchArchives.addEventListener('click', searchNews3)
+// limitArray.addEventListener('click', limitNotes)
