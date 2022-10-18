@@ -5,6 +5,7 @@ var playButton = document.getElementById("play-button")
 var stopButton = document.getElementById("stop-button")
 var searchButton = document.getElementById("search-button")
 var saveButton = document.getElementById("save-button")
+var clearButton = document.getElementById("clear-button")
 var notes 
 var favorites = document.getElementById("saves")
 var searchJoke = document.getElementById("search-joke")
@@ -208,4 +209,7 @@ stopButton.addEventListener('click', stop)
 // searchJoke.addEventListener('click', searchNews2)
 limitArray.addEventListener('click', limitNotes)
 saveButton.addEventListener('click', save)
+clearButton.addEventListener('click', function() {
+    customSearchEl.value = ""
+})
 
