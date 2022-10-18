@@ -1,9 +1,13 @@
 let today = new Date().toISOString().slice(0, 10)
 
 var title
-var playButton = document.getElementById("playButton")
-var stopButton = document.getElementById("stopButton")
+var playButton = document.getElementById("play-button")
+var stopButton = document.getElementById("stop-button")
 var searchButton = document.getElementById("search-button")
+var saveButton = document.getElementById("save-button")
+var clearButton = document.getElementById("clear-button")
+var notes 
+var favorites = document.getElementById("saves")
 var searchJoke = document.getElementById("search-joke")
 var limitArray = document.getElementById("limit-array")
 var headlineEL = document.getElementById("headline-span")
@@ -16,6 +20,7 @@ var newsSearchEl = document.getElementById("search-news")
 var players = []
 var limitNotes
 var resetSeq
+
 
 
 var dist = new Tone.Distortion(0.3).toDestination();
@@ -140,7 +145,8 @@ function play(resetSeq) {
     playButton.disabled = true
 
     
-    var notes = customSearchEl.value.toLowerCase().split("")
+    notes = customSearchEl.value.toLowerCase().split("")
+    console.log(notes)
     if (notes.length === 0) {
         alert("please enter data to make beats")
     }
@@ -164,7 +170,7 @@ function play(resetSeq) {
 function getPlayersIndex(note) {
     var searchStringInt = new TextEncoder().encode(note)
     return searchStringInt - 97
-    
+    console.log(searchStringInt)
 }
 
 function stop() {
@@ -180,9 +186,30 @@ lengthSlider.addEventListener('input', function (event){
     resetSeq = lengthSlider.value
 })
 
+function save () {
+    console.log("click")
+    localStorage.setItem(customSearchEl.value, customSearchEl.value)
+    var button = document.createElement("button")
+    button.textContent = customSearchEl.value
+    button.addEventListener("click", function() {
+        var repopulate = localStorage.getItem(button.textContent)
+        console.log(repopulate)
+        customSearchEl.value = repopulate
+    })
+    favorites.appendChild(button);
+
+}
+
+
+
 
 playButton.addEventListener('click', play)
 stopButton.addEventListener('click', stop)
 // searchButton.addEventListener('click', searchNews1)
 // searchJoke.addEventListener('click', searchNews2)
 limitArray.addEventListener('click', limitNotes)
+saveButton.addEventListener('click', save)
+clearButton.addEventListener('click', function() {
+    customSearchEl.value = ""
+})
+
