@@ -111,11 +111,8 @@ function searchNews3(){
         })
 
 }
-function setLimitNotes() {
-    limitNotes = true
-}
 
-
+//object containing sound paths
 const paths = {
     block: "assets/sounds/909/block.WAV",
     clap: "assets/sounds/909/clap.WAV",
@@ -145,15 +142,21 @@ const paths = {
     tom: "assets/sounds/909/tom.WAV",
 }
 
+//The Object.keys() method returns an array that holds the pathnames 
 var pathNames = Object.keys(paths)
 
+
+//use pathnames array at index i inside of the paths object and push each 'tone.Player' with routing into players array
 for (i = 0; i < pathNames.length; i++) {
     // const player = new Tone.Player(paths[pathNames[i]]).toDestination();
     const player = new Tone.Player(paths[pathNames[i]]).connect(dist);
     players.push(player)
+    console.log(players)
 }
 
+//function to start playing sequence
 function play() {
+    //clear notes array
     notes = ''
     Tone.Transport.stop()
     Tone.Transport.start()
@@ -163,18 +166,16 @@ function play() {
     Tone.Transport.bpm.value = 200;
     playButton.disabled = true
 
+    //if something exists in the search field, then allow its value into notes array
     if (customSearchEl.value){
         notes = customSearchEl.value.toLowerCase().split("")
     }
-    
-    
-    console.log(notes)
-    
+    //if no data in notes array try again
     if (notes.length === 0) {
         alert("please enter data to make beats")
     }
     
-    
+    //playNote
     function playNote(time, note) {
         var player = players[getPlayersIndex(note)]
         player.start(time)
@@ -195,7 +196,7 @@ function play() {
 console.log(customSearchEl.value)
 
 function getPlayersIndex(note) {
-    
+    console.log(note)
     var searchStringInt = new TextEncoder().encode(note);
     return searchStringInt - 97
 
