@@ -19,7 +19,7 @@ var limitNotes
 var resetSeq
 var notes
 
-var dist = new Tone.Distortion(0.3).toDestination();
+var dist = new Tone.Distortion(0.2).toDestination();
 var seq
 //var feedbackDelay = new Tone.FeedbackDelay("4n", 0.25).toDestination();
 
@@ -102,8 +102,8 @@ function searchNews3(){
             return response.json()
         })
         .then(function (json) {
+            //
             var title = json[1][0].toLowerCase().replace(/[^a-z ]/gi, '')
-           // var titleInt = new TextEncoder().encode(title)
             notes = title.split("")
             headlineEL.innerText = json[1][0]
             console.log(title)
@@ -151,7 +151,6 @@ for (i = 0; i < pathNames.length; i++) {
     // const player = new Tone.Player(paths[pathNames[i]]).toDestination();
     const player = new Tone.Player(paths[pathNames[i]]).connect(dist);
     players.push(player)
-    console.log(players)
 }
 
 //function to start playing sequence
@@ -175,31 +174,27 @@ function play() {
         alert("please enter data to make beats")
     }
     
-    //playNote
+    //playNote references the players array at getPlayersIndex(note) which is the encoded letters offset by 97 and puts that unique player into var player and then starts that player. 
     function playNote(time, note) {
         var player = players[getPlayersIndex(note)]
+        console.log(getPlayersIndex(note))
         player.start(time)
     }
 
-    
-    //taking notes, iterating through, and passing each note to function
+   // pass in an array of events(notes) which will be spaced at the given subdivision (4n for quarter notes).start with 0 time delay
     seq = new Tone.Sequence(playNote, notes, "4n").start(0);
    
+    //sequence settings
     seq.set({
         probability: 1,
     })
-        
-    
-   
 }
 
-console.log(customSearchEl.value)
 
+//encode each letter(note) in notes array into charCode, offset by 97 so that a=0, b=1...
 function getPlayersIndex(note) {
-    console.log(note)
     var searchStringInt = new TextEncoder().encode(note);
     return searchStringInt - 97
-
 }
 
 function stop() {
