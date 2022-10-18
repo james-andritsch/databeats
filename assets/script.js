@@ -4,6 +4,10 @@ var title
 var playButton = document.getElementById("play-button")
 var stopButton = document.getElementById("stop-button")
 var searchButton = document.getElementById("search-button")
+var saveButton = document.getElementById("save-button")
+var clearButton = document.getElementById("clear-button")
+var notes 
+var favorites = document.getElementById("saves")
 var searchJoke = document.getElementById("search-joke")
 var searchArchives = document.getElementById("search-archives")
 var limitArray = document.getElementById("limit-array")
@@ -18,6 +22,7 @@ var players = []
 var limitNotes
 var resetSeq
 var notes
+
 
 var dist = new Tone.Distortion(0.3).toDestination();
 var seq
@@ -217,9 +222,34 @@ lengthSlider.addEventListener('input', function (event){
     console.log(lengthSlider.value)
 })
 
+function save () {
+    console.log("click")
+    localStorage.setItem(customSearchEl.value, customSearchEl.value)
+    var button = document.createElement("button")
+    button.textContent = customSearchEl.value
+    button.addEventListener("click", function() {
+        var repopulate = localStorage.getItem(button.textContent)
+        console.log(repopulate)
+        customSearchEl.value = repopulate
+    })
+    favorites.appendChild(button);
+
+}
+
+
+
 
 playButton.addEventListener('click', play)
 stopButton.addEventListener('click', stop)
+// searchButton.addEventListener('click', searchNews1)
+// searchJoke.addEventListener('click', searchNews2)
+// limitArray.addEventListener('click', limitNotes)
+
+saveButton.addEventListener('click', save)
+clearButton.addEventListener('click', function() {
+    customSearchEl.value = ""
+})
+
 //searchButton.addEventListener('click', searchNews1)
 searchJoke.addEventListener('click', searchNews2)
 searchArchives.addEventListener('click', searchNews3)

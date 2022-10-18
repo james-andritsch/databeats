@@ -11,11 +11,16 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
   <link href="./assets/style.css" rel="stylesheet">
+<<<<<<< HEAD
   <link href="assets/style.css" rel="stylesheet">
+=======
+
+
+>>>>>>> 6e6c30f4c48973c08e6492ae18d4201746a20f0f
   <title>DataBeats</title>
 </head>
 
-<body>
+<body class="container">
 
   <nav>
     <h1>Data Beats</h1>
@@ -42,7 +47,7 @@
       <form>
         <div class="input-field">
           <input id="search" type="search" required>
-          <i class="material-icons">clear</i>
+          <i id="clear-button" class="material-icons">close</i>
         </div>
       </form>
     </div>
@@ -52,6 +57,8 @@
     <button id="play-button" class="btn-floating btn-large"><i class="material-icons">play_arrow</i></button>
 
     <button id="stop-button" class="btn-floating btn-large"><i class="material-icons">stop</i></button>
+
+    <button id="save-button" class="btn-floating btn-large"><i class="material-icons">save</i></button>
   </div>
 
   <div class="column-row">
@@ -70,6 +77,7 @@
 
     <div id="favorites-card" class="card-panel column">
       <span> <i class="material-icons">star</i> Favorites</span>
+      <ul id="saves"></ul>
     </div>
   </div>
 

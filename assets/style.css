@@ -11,15 +11,15 @@
 }
 
 #headline {
-    background-color: #FFEEAD;
+    background-color:  rgba(255, 237, 36, 0.5);
 }
 
 #joke {
-    background-color: #D9534F;
+    background-color:  rgba(53, 254, 130, 0.5);
 }
 
 #favorites-card {
-    background-color: #96CEB4;
+    background-color: rgba(255, 68, 227, 0.5);
 }
 
 body {
@@ -28,13 +28,24 @@ body {
 }
 
 #btns {
- 
-    
+   left: 100px;
    margin: 10px;
    position: relative;
    border-color: #F8CB2E;
    border-style: solid;
    border-width: thin;
+}
+
+#play-button {
+    margin: 10px;
+}
+
+#stop-button {
+    margin: 10px;
+}
+
+#save-button {
+    margin: 10px;
 }
 
 .btn-large {
