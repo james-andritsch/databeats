@@ -35,13 +35,23 @@ body {
 }
 
 #btns {
-   margin: auto;
+   margin: 20px auto 10px auto;
    position: relative;
    /* border-color: #F8CB2E; */
    /* border-style: solid; */
    border-width: thin;
    /* display: flex !important; */
    justify-content: center !important;
+}
+
+.play-controls {
+    margin-top: 20px;
+}
+
+.search-controls button{
+    /* display: flex;
+    justify-content:stretch; */
+    margin: 10px;
 }
 
 /* #btns button {
@@ -73,7 +83,7 @@ nav {
 .nav-wrapper {
     /* background-color: none !important; */
     padding: 0px;
-    margin: 0px;
+    margin: 20px;
     /* border-color: #F2D8B3; */
 }
 
@@ -214,8 +224,12 @@ h1 {
     font-family:monospace;
     margin-left: 10px;
     white-space: nowrap;
-    margin: auto;
-    
+    margin:  auto;
+    font-size: 50px;
+}
+
+nav h1 {
+    padding: 0 0 10px 15px;
 }
 
 @keyframes slide {

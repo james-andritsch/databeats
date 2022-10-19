@@ -19,15 +19,9 @@
   <nav>
     <h1>Data Beats</h1>
   </nav>
-  <div>
-    <input type="search" id="search-news" placeholder="search the news">
-  </div>
   
   <div id="search-container">
     <!-- <input type="search" id="search" placeholder="custom string"> -->
-    <button id="search-button" class="waves-effect waves-light btn">search news</button>
-    <button id="search-joke" class="waves-effect waves-light btn">random joke</button>
-    <button id="search-archives" class="waves-effect waves-light btn">archives</button>
   </div>
   
   
@@ -40,8 +34,8 @@
     <div class="nav-wrapper">
       <form>
         <div class="input-field">
-          <input placeholder="Enter Custom String or Search Archives" id="search" type="search" required>
-          <i class="material-icons">clear</i>
+          <input placeholder="Search" id="search" type="search" required>
+          <i id="clear-button" class="material-icons">clear</i>
         </div>
       </form>
     </div>
@@ -49,7 +43,11 @@
   
   <div id="controls">
     <div id="btns" class="container">
-      <center>
+      <center class="search-controls">
+        <button id="search-joke" class="waves-effect waves-light btn">random joke</button>
+        <button id="search-archives" class="waves-effect waves-light btn">Search Archives</button>
+      </center>
+      <center class="play-controls">
         <button id="play-button" class="btn-floating btn-large"><i class="material-icons">play_arrow</i></button>
         
         <button id="stop-button" class="btn-floating btn-large"><i class="material-icons">stop</i></button>
@@ -62,9 +60,9 @@
         <input type="range" min="20" max="500" value="20" class="slider" id="bpm-slider">
       </div>
       
-      <div class="slidecontainer">Loop Start
+      <!-- <div class="slidecontainer">Loop Start
         <input type="range" min="1" max="16" value="8" class="slider" id="loop-start-slider">
-      </div>
+      </div> -->
 
       <div class="slidecontainer">Loop End
         <input type="range" min="1" max="16" value="8" class="slider" id="loop-end-slider">

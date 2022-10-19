@@ -169,7 +169,8 @@ for (i = 0; i < pathNames.length; i++) {
 //function to start playing sequence
 function play() {
     //clear notes array
-    //notes = ''
+    console.log(notes)
+    // notes = ''
     Tone.Transport.stop()
     Tone.Transport.start()
     
@@ -237,17 +238,16 @@ function save () {
         customSearchEl.value = repopulate
     })
     favorites.appendChild(button);
-
 }
 
 
 
-loopStartSlider.addEventListener('input', function (event){
-    seq.set({
-        loopStart: +loopStartSlider.value       
-    })  
-    console.log(loopStartSlider.value)
-})
+// loopStartSlider.addEventListener('input', function (event){
+//     seq.set({
+//         loopStart: +loopStartSlider.value       
+//     })  
+//     console.log(loopStartSlider.value)
+// })
 
 playButton.addEventListener('click', play)
 stopButton.addEventListener('click', stop)
@@ -258,6 +258,7 @@ stopButton.addEventListener('click', stop)
 saveButton.addEventListener('click', save)
 clearButton.addEventListener('click', function() {
     customSearchEl.value = ""
+    // notes = ""
 })
 
 //searchButton.addEventListener('click', searchNews1)
