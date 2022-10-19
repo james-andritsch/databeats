@@ -1,5 +1,6 @@
 let today = new Date().toISOString().slice(0, 10)
 
+
 var title
 
 var playButton = document.getElementById("play-button")
@@ -7,11 +8,11 @@ var stopButton = document.getElementById("stop-button")
 var searchButton = document.getElementById("search-button")
 var saveButton = document.getElementById("save-button")
 var clearButton = document.getElementById("clear-button")
-var notes 
+var notes
 var favorites = document.getElementById("saves")
 var searchJoke = document.getElementById("search-joke")
 var searchArchives = document.getElementById("search-archives")
-var limitArray = document.getElementById("limit-array")
+var customString = document.getElementById("custom-string")
 var headlineEL = document.getElementById("headline-span")
 var jokeEl = document.getElementById("joke-span")
 var punchlineEl = document.getElementById("punchline-span")
@@ -24,6 +25,7 @@ var players = []
 var limitNotes
 var resetSeq
 var notes
+var title
 
 const lowpass = new Tone.Filter(1200, "lowpass");
 const compressor = new Tone.Compressor(-18);
@@ -84,7 +86,7 @@ function searchNews2() {
         })
         .then(function (json) {
 
-console.log(json)
+            console.log(json)
             var title = json.body[0].setup.toLowerCase().replace(/[^a-z0-9 ]/gi, '') +
                 json.body[0].punchline.toLowerCase().replace(/[^a-z0-9 ]/gi, '')
 
@@ -94,10 +96,11 @@ console.log(json)
         })
 }
 
-function searchNews3(){
+
+function searchNews3() {
     var customSearchString = customSearchEl.value
-    
-    var url = 'https://chroniclingamerica.loc.gov/suggest/titles/?q=' + customSearchString  
+
+    var url = 'https://chroniclingamerica.loc.gov/suggest/titles/?q=' + customSearchString
     var req = new Request(url);
 
     fetch(req)
@@ -117,7 +120,6 @@ function searchNews3(){
             headlineEL.innerText = json[1][0]
             console.log(title)
             console.log(notes)
-           
         })
 
 }
@@ -164,7 +166,9 @@ for (i = 0; i < pathNames.length; i++) {
     players.push(player)
 }
 
-
+function setCustomString() {
+    notes = customSearchEl.value.toLowerCase().replace(/[^a-z ]/gi, '').split("")
+}
 
 //function to start playing sequence
 function play() {
@@ -173,21 +177,16 @@ function play() {
     // notes = ''
     Tone.Transport.stop()
     Tone.Transport.start()
-    
- 
     Tone.Transport.swing.value = 1
     Tone.Transport.bpm.value = 200;
     playButton.disabled = true
 
-    //if something exists in the search field, then allow its value into notes array
-    if (customSearchEl.value){
-        notes = customSearchEl.value.toLowerCase().split("")
-    }
+
     //if no data in notes array try again
-    if (notes.length === 0) {
-        alert("please enter data to make beats")
+    if (notes === undefined) {
+        alert("please enter data to make beats, select custom string, random joke, or search archives before pressing play")
     }
-    
+
     //playNote references the players array at getPlayersIndex(note) which is the encoded letters offset by 97 and puts that unique player into var player and then starts that player. 
     function playNote(time, note) {
         var player = players[getPlayersIndex(note)]
@@ -195,18 +194,16 @@ function play() {
         player.start(time)
     }
 
-   // pass in an array of events(notes) which will be spaced at the given subdivision (4n for quarter notes).start with 0 time delay
+    // pass in an array of events(notes) which will be spaced at the given subdivision (4n for quarter notes).start with 0 time delay
     seq = new Tone.Sequence(playNote, notes, "4n").start(0);
-   
+
     //sequence settings
     seq.set({
         probability: 1,
     })
 }
-
-
 //encode each letter(note) in notes array into charCode, offset by 97 so that a=0, b=1...
-function getPlayersIndex(note) { 
+function getPlayersIndex(note) {
     var searchStringInt = new TextEncoder().encode(note);
     return searchStringInt - 97
 }
@@ -220,25 +217,75 @@ bpmSlider.addEventListener('input', function (event) {
     Tone.Transport.bpm.rampTo(+event.target.value, 0.1)
 })
 
-loopEndSlider.addEventListener('input', function (event){
+loopEndSlider.addEventListener('input', function (event) {
     seq.set({
-        loopEnd: +loopEndSlider.value       
-    })  
+        loopEnd: +loopEndSlider.value
+    })
     console.log(loopEndSlider.value)
 })
 
-function save () {
-    console.log("click")
-    localStorage.setItem(customSearchEl.value, customSearchEl.value)
-    var button = document.createElement("button")
-    button.textContent = customSearchEl.value
-    button.addEventListener("click", function() {
-        var repopulate = localStorage.getItem(button.textContent)
-        console.log(repopulate)
-        customSearchEl.value = repopulate
-    })
-    favorites.appendChild(button);
+function save(event) {
+    event.preventDefault();
+
+    if (customSearchEl.value) {
+        localStorage.setItem(customSearchEl.value, customSearchEl.value)
+        var button = document.createElement("button")
+        button.textContent = customSearchEl.value
+
+
+        button.addEventListener("click", function () {
+            var repopulate = localStorage.getItem(button.textContent)
+            console.log(repopulate)
+            notes = ""
+            customSearchEl.value = repopulate
+        })
+        favorites.appendChild(button);
+    }
+
+    if (headlineEL.innerText) {
+        localStorage.setItem(headlineEL.innerText.split(' ').slice(0, 2).join(' '), headlineEL.innerText)
+        var button = document.createElement("button")
+        button.textContent = headlineEL.innerText.split(' ').slice(0, 2).join(' ')
+
+
+        button.addEventListener("click", function () {
+            var repopulate = localStorage.getItem(button.textContent)
+            headlineEL.innerText = repopulate
+            notes = headlineEL.innerText.toLowerCase().replace(/[^a-z ]/gi, '').split("")
+        })
+        favorites.appendChild(button);
+    }
+
+    if (jokeEL.innerText) {
+        localStorage.setItem(jokeEL.innerText.split(' ').slice(0, 2).join(' '), jokeEL.innerText)
+        var button = document.createElement("button")
+        button.textContent = jokeEL.innerText.split(' ').slice(0, 2).join(' ')
+
+
+        button.addEventListener("click", function () {
+            var repopulate = localStorage.getItem(button.textContent)
+            jokeEL.innerText = repopulate
+            notes = jokeEL.innerText.toLowerCase().replace(/[^a-z ]/gi, '').split("")
+        })
+        favorites.appendChild(button);
+    }
 }
+
+
+// function save () {
+//     localStorage.setItem(customSearchEl.value, customSearchEl.value)
+//     var button = document.createElement("button")
+//     button.textContent = customSearchEl.value
+
+//     console.log(notes)
+
+//     button.addEventListener("click", function() {
+//         var repopulate = localStorage.getItem(button.textContent)
+//         console.log(repopulate)
+//         customSearchEl.value = repopulate
+//     })
+//     favorites.appendChild(button);
+// }
 
 
 
@@ -256,7 +303,7 @@ stopButton.addEventListener('click', stop)
 // limitArray.addEventListener('click', limitNotes)
 
 saveButton.addEventListener('click', save)
-clearButton.addEventListener('click', function() {
+clearButton.addEventListener('click', function () {
     customSearchEl.value = ""
     // notes = ""
 })
@@ -264,4 +311,5 @@ clearButton.addEventListener('click', function() {
 //searchButton.addEventListener('click', searchNews1)
 searchJoke.addEventListener('click', searchNews2)
 searchArchives.addEventListener('click', searchNews3)
+customString.addEventListener('click', setCustomString)
 
