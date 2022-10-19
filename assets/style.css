@@ -220,6 +220,10 @@ nav {
     transform: translate(-50%, -50%);
 }
 
+.header {
+    margin-top: 20px;
+}
+
 h1 {
     font-family:monospace;
     margin-left: 10px;
