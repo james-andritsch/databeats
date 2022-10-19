@@ -1,6 +1,7 @@
 let today = new Date().toISOString().slice(0, 10)
 
 var title
+
 var playButton = document.getElementById("play-button")
 var stopButton = document.getElementById("stop-button")
 var searchButton = document.getElementById("search-button")
@@ -20,7 +21,12 @@ var limitNotes
 var resetSeq
 var notes
 
-var dist = new Tone.Distortion(0.2).toDestination();
+const lowpass = new Tone.Filter(1200, "lowpass");
+const compressor = new Tone.Compressor(-18);
+const dist = new Tone.Distortion(1);
+const feedbackDelay = new Tone.FeedbackDelay("8n", 0.5)
+// Tone.Destination.chain(dist, feedbackDelay, lowpass, compressor);
+
 var seq
 //var feedbackDelay = new Tone.FeedbackDelay("4n", 0.25).toDestination();
 
@@ -145,13 +151,16 @@ const paths = {
 //The Object.keys() method returns an array that holds the pathnames 
 var pathNames = Object.keys(paths)
 
-
+//lookup pathname at index i
+//use return value of lookup which is a key in paths
+//lookup path 
 //use pathnames array at index i inside of the paths object and push each 'tone.Player' with routing into players array
 for (i = 0; i < pathNames.length; i++) {
-    // const player = new Tone.Player(paths[pathNames[i]]).toDestination();
-    const player = new Tone.Player(paths[pathNames[i]]).connect(dist);
+    const player = new Tone.Player(paths[pathNames[i]]).toDestination()
     players.push(player)
 }
+
+
 
 //function to start playing sequence
 function play() {
@@ -192,7 +201,7 @@ function play() {
 
 
 //encode each letter(note) in notes array into charCode, offset by 97 so that a=0, b=1...
-function getPlayersIndex(note) {
+function getPlayersIndex(note) { 
     var searchStringInt = new TextEncoder().encode(note);
     return searchStringInt - 97
 }
