@@ -31,7 +31,7 @@ const lowpass = new Tone.Filter(1200, "lowpass");
 const compressor = new Tone.Compressor(-18);
 const dist = new Tone.Distortion(1);
 const feedbackDelay = new Tone.FeedbackDelay("8n", 0.5)
-// Tone.Destination.chain(dist, feedbackDelay, lowpass, compressor);
+ Tone.Destination.chain(dist, compressor);
 
 var seq
 //var feedbackDelay = new Tone.FeedbackDelay("4n", 0.25).toDestination();
@@ -119,7 +119,7 @@ function searchNews3() {
             notes = title.split("")
             headlineEL.innerText = json[1][0]
             console.log(title)
-            console.log(notes)
+            
         })
 
 }
@@ -172,6 +172,7 @@ function setCustomString() {
 
 //function to start playing sequence
 function play() {
+    seq?.dispose()
     //clear notes array
     console.log(notes)
     // notes = ''
@@ -201,6 +202,7 @@ function play() {
     seq.set({
         probability: 1,
     })
+    console.log(notes)
 }
 //encode each letter(note) in notes array into charCode, offset by 97 so that a=0, b=1...
 function getPlayersIndex(note) {
@@ -211,6 +213,7 @@ function getPlayersIndex(note) {
 function stop() {
     Tone.Transport.stop()
     playButton.disabled = false
+    notes = ""
 }
 
 bpmSlider.addEventListener('input', function (event) {
@@ -237,7 +240,7 @@ function save(event) {
             var repopulate = localStorage.getItem(button.textContent)
             console.log(repopulate)
             notes = ""
-            customSearchEl.value = repopulate
+            notes = repopulate
         })
         favorites.appendChild(button);
     }
@@ -264,7 +267,7 @@ function save(event) {
 
         button.addEventListener("click", function () {
             var repopulate = localStorage.getItem(button.textContent)
-            jokeEL.innerText = repopulate
+            notes = repopulate
             notes = jokeEL.innerText.toLowerCase().replace(/[^a-z ]/gi, '').split("")
         })
         favorites.appendChild(button);
