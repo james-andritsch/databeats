@@ -242,6 +242,10 @@ nav h1 {
     }
 }
 
+#clear-button {
+   cursor: pointer; 
+}
+
 /* responsive layout to change cards to single column */
 @media (max-width: 800px) {
     #card-box {

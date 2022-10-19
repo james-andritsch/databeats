@@ -229,15 +229,17 @@ loopEndSlider.addEventListener('input', function (event){
 
 function save () {
     console.log("click")
-    localStorage.setItem(customSearchEl.value, customSearchEl.value)
-    var button = document.createElement("button")
-    button.textContent = customSearchEl.value
-    button.addEventListener("click", function() {
-        var repopulate = localStorage.getItem(button.textContent)
-        console.log(repopulate)
-        customSearchEl.value = repopulate
-    })
-    favorites.appendChild(button);
+    if (customSearchEl.value) {
+        localStorage.setItem(customSearchEl.value, customSearchEl.value)
+        var button = document.createElement("button")
+        button.textContent = customSearchEl.value
+        button.addEventListener("click", function() {
+            var repopulate = localStorage.getItem(button.textContent)
+            console.log(repopulate)
+            customSearchEl.value = repopulate
+        })
+        favorites.appendChild(button);
+    } 
 }
 
 
