@@ -1,4 +1,7 @@
-
+::placeholder {
+    color: black;
+    font-family:monospace;
+}
 .column-row {
     margin: 0px;
     padding: 0px;
@@ -27,15 +30,25 @@
 #favorites-card {
     background-color: rgba(255, 68, 227, 0.5);
 }
-
+#custom-string{
+    font-family:monospace;
+}
+#search-joke{
+    font-family:monospace;
+}
+#search-archives{
+    font-family:monospace;
+}
 body {
     /* max-width: 1200px; */
+    font-family:monospace;
     margin: auto;
     margin: 50;
 }
 
 #btns {
    margin: 20px auto 10px auto;
+   font-family:monospace;
    position: relative;
    /* border-color: #F8CB2E; */
    /* border-style: solid; */
@@ -81,6 +94,7 @@ nav {
 }
 
 .nav-wrapper {
+    font-family:monospace;
     /* background-color: none !important; */
     padding: 0px;
     margin: 20px;
@@ -88,103 +102,50 @@ nav {
 }
 
 .column {
+    font-family:monospace;
     margin: 5px;
     float: left;
     width: 32%;
 }
 
 .slidecontainer {
+    font-size: 24px;
     width: 100%; /* Width of the outside container */
   }
   
   /* The slider itself */
   .slider {
-    -webkit-appearance: none;  /* Override default CSS styles */
-    appearance: none;
     width: 100%; /* Full-width */
-    height: 25px; /* Specified height */
+    height: 15px; /* Specified height */
     background: #d3d3d3; /* Grey background */
     outline: none; /* Remove outline */
-    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    opacity: 1; /* Set transparency (for mouse-over effects on hover) */
     -webkit-transition: .2s; /* 0.2 seconds transition on hover */
     transition: opacity .2s;
     border:none !important;
   }
   
+  input[type=range]::-webkit-slider-thumb {
+    box-shadow: 0px 0px 0px #000000;
+    height: 32px;
+    width: 32px;
+    border-radius: 36px;
+    background: #FFFCFC;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -14px;
+  }
+
   /* Mouse-over effects */
   .slider:hover {
     opacity: 1; /* Fully shown on mouse-over */
   }
   
-  /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
-  .slider::-webkit-slider-thumb {
-    -webkit-appearance: none; /* Override default look */
-    appearance: none;
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #04AA6D; /* Green background */
-    cursor: pointer; /* Cursor on hover */
-  }
+
   
-  .slider::-moz-range-thumb {
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #04AA6D; /* Green background */
-    cursor: pointer; /* Cursor on hover */
-  }
 
-/* The slider itself */
-.slider {
-    -webkit-appearance: none;
-    /* Override default CSS styles */
-    appearance: none;
 
-    width: 100%;
-    /* Full-width */
-    height: 25px;
-    /* Specified height */
-    background: #d3d3d3;
-    /* Grey background */
-    outline: none;
-    /* Remove outline */
-    opacity: 0.7;
-    /* Set transparency (for mouse-over effects on hover) */
-    -webkit-transition: .2s;
-    /* 0.2 seconds transition on hover */
-    transition: opacity .2s;
-}
 
-/* Mouse-over effects */
-.slider:hover {
-    opacity: 1;
-    /* Fully shown on mouse-over */
-}
-
-/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    /* Override default look */
-    appearance: none;
-    width: 25px;
-    /* Set a specific slider handle width */
-    height: 25px;
-    /* Slider handle height */
-    background: #000000;
-    /* Green background */
-    cursor: pointer;
-    /* Cursor on hover */
-}
-
-.slider::-moz-range-thumb {
-    width: 25px;
-    /* Set a specific slider handle width */
-    height: 25px;
-    /* Slider handle height */
-    background: #04AA6D;
-    /* Green background */
-    cursor: pointer;
-    /* Cursor on hover */
-}
 
 .bg {
     animation: slide 3s ease-in-out infinite alternate;
