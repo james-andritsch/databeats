@@ -1,6 +1,7 @@
 let today = new Date().toISOString().slice(0, 10)
 
 var title
+
 var playButton = document.getElementById("play-button")
 var stopButton = document.getElementById("stop-button")
 var searchButton = document.getElementById("search-button")
@@ -15,7 +16,8 @@ var headlineEL = document.getElementById("headline-span")
 var jokeEl = document.getElementById("joke-span")
 var punchlineEl = document.getElementById("punchline-span")
 var bpmSlider = document.getElementById("bpm-slider")
-var lengthSlider = document.getElementById("length-slider")
+var loopEndSlider = document.getElementById("loop-end-slider")
+var loopStartSlider = document.getElementById("loop-start-slider")
 var customSearchEl = document.getElementById("search")
 var newsSearchEl = document.getElementById("search-news")
 var players = []
@@ -23,14 +25,18 @@ var limitNotes
 var resetSeq
 var notes
 
+const lowpass = new Tone.Filter(1200, "lowpass");
+const compressor = new Tone.Compressor(-18);
+const dist = new Tone.Distortion(1);
+const feedbackDelay = new Tone.FeedbackDelay("8n", 0.5)
+// Tone.Destination.chain(dist, feedbackDelay, lowpass, compressor);
 
-var dist = new Tone.Distortion(0.3).toDestination();
 var seq
 //var feedbackDelay = new Tone.FeedbackDelay("4n", 0.25).toDestination();
 
 
 // function searchNews1() {
-//     var newsSearchString = newsSearchEl.value
+//     var customSearchString = customSearchEl.value
 //     var APIKey = "hjEYIlKUFuYilv8Qo8M-Wsv98rmK9mTxqtSH19k2q-0"
 //     var url = 'https://api.newscatcherapi.com/v2/search?q=' + newsSearchString
 //     var req = new Request(url);
@@ -82,18 +88,16 @@ console.log(json)
             var title = json.body[0].setup.toLowerCase().replace(/[^a-z0-9 ]/gi, '') +
                 json.body[0].punchline.toLowerCase().replace(/[^a-z0-9 ]/gi, '')
 
-             var titleInt = new TextEncoder().encode(title)
-            notes = (titleInt)
-            
+            notes = title.split("")
             jokeEl.innerText = json.body[0].setup
             punchlineEl.innerText = json.body[0].punchline
         })
 }
 
 function searchNews3(){
-    var newsSearchString = newsSearchEl.value
+    var customSearchString = customSearchEl.value
     
-    var url = 'https://chroniclingamerica.loc.gov/suggest/titles/?q=' + newsSearchString  
+    var url = 'https://chroniclingamerica.loc.gov/suggest/titles/?q=' + customSearchString  
     var req = new Request(url);
 
     fetch(req)
@@ -107,20 +111,18 @@ function searchNews3(){
             return response.json()
         })
         .then(function (json) {
+            customSearchEl.value = ''
             var title = json[1][0].toLowerCase().replace(/[^a-z ]/gi, '')
-           // var titleInt = new TextEncoder().encode(title)
             notes = title.split("")
             headlineEL.innerText = json[1][0]
             console.log(title)
+            console.log(notes)
            
         })
 
 }
-function setLimitNotes() {
-    limitNotes = true
-}
 
-
+//object containing sound paths
 const paths = {
     block: "assets/sounds/909/block.WAV",
     clap: "assets/sounds/909/clap.WAV",
@@ -150,16 +152,24 @@ const paths = {
     tom: "assets/sounds/909/tom.WAV",
 }
 
+//The Object.keys() method returns an array that holds the pathnames 
 var pathNames = Object.keys(paths)
 
+//lookup pathname at index i
+//use return value of lookup which is a key in paths
+//lookup path 
+//use pathnames array at index i inside of the paths object and push each 'tone.Player' with routing into players array
 for (i = 0; i < pathNames.length; i++) {
-    // const player = new Tone.Player(paths[pathNames[i]]).toDestination();
-    const player = new Tone.Player(paths[pathNames[i]]).connect(dist);
+    const player = new Tone.Player(paths[pathNames[i]]).toDestination()
     players.push(player)
 }
 
+
+
+//function to start playing sequence
 function play() {
-    notes = ''
+    //clear notes array
+    //notes = ''
     Tone.Transport.stop()
     Tone.Transport.start()
     
@@ -168,42 +178,36 @@ function play() {
     Tone.Transport.bpm.value = 200;
     playButton.disabled = true
 
+    //if something exists in the search field, then allow its value into notes array
     if (customSearchEl.value){
         notes = customSearchEl.value.toLowerCase().split("")
     }
-    
-    
-    console.log(notes)
-    
+    //if no data in notes array try again
     if (notes.length === 0) {
         alert("please enter data to make beats")
     }
     
-    
+    //playNote references the players array at getPlayersIndex(note) which is the encoded letters offset by 97 and puts that unique player into var player and then starts that player. 
     function playNote(time, note) {
         var player = players[getPlayersIndex(note)]
+        console.log(getPlayersIndex(note))
         player.start(time)
     }
 
-    
-    //taking notes, iterating through, and passing each note to function
+   // pass in an array of events(notes) which will be spaced at the given subdivision (4n for quarter notes).start with 0 time delay
     seq = new Tone.Sequence(playNote, notes, "4n").start(0);
    
+    //sequence settings
     seq.set({
         probability: 1,
     })
-        
-    
-   
 }
 
-console.log(customSearchEl.value)
 
-function getPlayersIndex(note) {
-    
+//encode each letter(note) in notes array into charCode, offset by 97 so that a=0, b=1...
+function getPlayersIndex(note) { 
     var searchStringInt = new TextEncoder().encode(note);
     return searchStringInt - 97
-
 }
 
 function stop() {
@@ -215,11 +219,11 @@ bpmSlider.addEventListener('input', function (event) {
     Tone.Transport.bpm.rampTo(+event.target.value, 0.1)
 })
 
-lengthSlider.addEventListener('input', function (event){
+loopEndSlider.addEventListener('input', function (event){
     seq.set({
-        loopEnd: +lengthSlider.value       
+        loopEnd: +loopEndSlider.value       
     })  
-    console.log(lengthSlider.value)
+    console.log(loopEndSlider.value)
 })
 
 function save () {
@@ -238,6 +242,12 @@ function save () {
 
 
 
+loopStartSlider.addEventListener('input', function (event){
+    seq.set({
+        loopStart: +loopStartSlider.value       
+    })  
+    console.log(loopStartSlider.value)
+})
 
 playButton.addEventListener('click', play)
 stopButton.addEventListener('click', stop)
@@ -253,4 +263,4 @@ clearButton.addEventListener('click', function() {
 //searchButton.addEventListener('click', searchNews1)
 searchJoke.addEventListener('click', searchNews2)
 searchArchives.addEventListener('click', searchNews3)
-// limitArray.addEventListener('click', limitNotes)
+
