@@ -7,6 +7,11 @@
     color: black;
 }
 
+#card-box {
+    display: flex !important;
+    flex-direction: row !important;
+}
+
 .card-panel {
     height: 600px;
 }
@@ -24,21 +29,23 @@
 }
 
 body {
-    max-width: 1200px;
+    /* max-width: 1200px; */
     margin: auto;
 }
 
 #btns {
-   margin: 10px;
+   margin: auto;
    position: relative;
    /* border-color: #F8CB2E; */
    /* border-style: solid; */
    border-width: thin;
-   justify-content: center;
+   /* display: flex !important; */
+   justify-content: center !important;
 }
 
-#btns button {
-}
+/* #btns button {
+    justify-items: center;
+} */
 
 #play-button {
     margin: 10px;
@@ -159,6 +166,9 @@ body {
 h1 {
     font-family:monospace;
     margin-left: 10px;
+    white-space: nowrap;
+    margin: auto;
+    
 }
  
 @keyframes slide {
@@ -168,5 +178,21 @@ h1 {
  
     100% {
         transform:translateX(25%);
+    }
+}
+
+/* responsive layout to change cards to single column */
+@media (max-width: 800px) {
+    #card-box {
+        flex-direction: column !important;
+    }
+
+    .column {
+        width: 100%;
+        height:fit-content;
+    }
+
+    #search-container {
+        white-space: nowrap;
     }
 }
