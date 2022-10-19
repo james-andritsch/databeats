@@ -19,22 +19,22 @@
   <nav>
     <h1>Data Beats</h1>
   </nav>
-  <div class="slidecontainer">BPM
-    <input type="range" min="20" max="500" value="20" class="slider" id="bpm-slider">
+  <div>
+    <input type="search" id="search-news" placeholder="search the news">
   </div>
-
-  <div class="slidecontainer">Length
-    <input type="range" min="1" max="16" value="8" class="slider" id="length-slider">
-  </div>
-
-
-  <!-- <input type="search" id="search" placeholder="custom string"> -->
-  <input type="search" id="search-news" placeholder="search the news">
-  <button id="search-button" class="waves-effect waves-light btn">search news</button>
-  <button id="search-joke" class="waves-effect waves-light btn">random joke</button>
   
-
-
+  <div id="search-container">
+    <!-- <input type="search" id="search" placeholder="custom string"> -->
+    <button id="search-button" class="waves-effect waves-light btn">search news</button>
+    <button id="search-joke" class="waves-effect waves-light btn">random joke</button>
+    <button id="search-archives" class="waves-effect waves-light btn">archives</button>
+  </div>
+  
+  
+  <div class="bg"></div>
+  <div class="bg bg2"></div>
+  <div class="bg bg3"></div>
+  
   <nav>
     <div class="nav-wrapper">
       <form>
@@ -45,16 +45,29 @@
       </form>
     </div>
   </nav>
-
-  <div id="btns" class="container">
-    <button id="play-button" class="btn-floating btn-large"><i class="material-icons">play_arrow</i></button>
-
-    <button id="stop-button" class="btn-floating btn-large"><i class="material-icons">stop</i></button>
-
-    <button id="save-button" class="btn-floating btn-large"><i class="material-icons">save</i></button>
+  
+  <div id="controls">
+    <div id="btns" class="container">
+      <center>
+        <button id="play-button" class="btn-floating btn-large"><i class="material-icons">play_arrow</i></button>
+        
+        <button id="stop-button" class="btn-floating btn-large"><i class="material-icons">stop</i></button>
+        
+        <button id="save-button" class="btn-floating btn-large"><i class="material-icons">save</i></button>
+      </center>
+    </div>
+    <div id="sliders">
+      <div class="slidecontainer">BPM
+        <input type="range" min="20" max="500" value="20" class="slider" id="bpm-slider">
+      </div>
+    
+      <div class="slidecontainer">Length
+        <input type="range" min="1" max="16" value="8" class="slider" id="length-slider">
+      </div>
+    </div>
   </div>
 
-  <div class="column-row">
+  <div id="card-box" class="column-row">
     <div id="headline" class="card-panel column">
       <span id="headline-span">Headline
       </span>
