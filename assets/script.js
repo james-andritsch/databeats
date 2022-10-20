@@ -5,8 +5,11 @@ var playButton = document.getElementById("play-button")
 var stopButton = document.getElementById("stop-button")
 var searchButton = document.getElementById("search-button")
 var saveButton = document.getElementById("save-button")
-var clearButton = document.getElementById("clear-button")
-var favorites = document.getElementById("saves")
+var clearSearchButton = document.getElementById("clear-button")
+var clearFavButton = document.getElementById('clear-favorites')
+
+
+var saves = document.getElementById("saves")
 var searchJokeEl = document.getElementById("search-joke")
 var searchArchives = document.getElementById("search-archives")
 var customString = document.getElementById("custom-string")
@@ -175,7 +178,7 @@ for (let i = 0; i < localStorage.length; i++) {
     var button = document.createElement("button")
    
     button.textContent = (localStorage.key(i));
-    favorites.appendChild(button);
+    saves.appendChild(button);
     button.classList.add('waves-effect', 'waves-light', 'btn')
 }
 
@@ -183,13 +186,14 @@ function save() {
     console.log(notes)
     localStorage.setItem(title.split(' ').slice(0, 2).join(' '), JSON.stringify(notes))
     var button = document.createElement("button")
+    button.classList.add('waves-effect', 'waves-light', 'btn')
     button.textContent = title.split(' ').slice(0, 2).join(' ')
 
     button.addEventListener("click", function () {
         var repopulate = JSON.parse(localStorage.getItem(button.textContent))
         notes = repopulate
     })
-    favorites.appendChild(button);
+    saves.appendChild(button);
 }
 
 //sliders and buttons
@@ -211,13 +215,18 @@ loopEndSlider.addEventListener('input', function (event) {
 // })
 
 
+
 playButton.addEventListener('click', play)
 stopButton.addEventListener('click', stop)
 searchJokeEl.addEventListener('click', searchJoke)
 searchArchives.addEventListener('click', searchArchive)
 customString.addEventListener('click', setCustomString)
 saveButton.addEventListener('click', save)
-clearButton.addEventListener('click', function () {
+clearFavButton.addEventListener('click', function(){
+    saves.innerHTML = ''
+     localStorage.clear()
+})
+clearSearchButton.addEventListener('click', function () {
     customSearchEl.value = ""
 })
 
