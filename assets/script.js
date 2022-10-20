@@ -170,14 +170,17 @@ function stop() {
     playButton.disabled = false
 }
 
-
+for (let i = 0; i < localStorage.length; i++) {
+    var button = document.createElement("button") 
+    button.textContent = (localStorage.key(i));
+    favorites.appendChild(button);
+  }
+  
 function save () {
     console.log(notes)
     localStorage.setItem(title.split(' ').slice(0, 2).join(' '), JSON.stringify(notes))
     var button = document.createElement("button")
     button.textContent = title.split(' ').slice(0, 2).join(' ')
-
-
 
     button.addEventListener("click", function() {
          var repopulate = JSON.parse(localStorage.getItem(button.textContent)) 
@@ -185,6 +188,8 @@ function save () {
     })
     favorites.appendChild(button);
 }
+
+
 
 
 
