@@ -95,7 +95,6 @@ function setCustomString() {
     notes = customSearchEl.value.toLowerCase().replace(/[^a-z ]/gi, '').split("")
 }
 
-
 //object containing sound paths
 const paths = {
     block: "assets/sounds/909/block.WAV",
@@ -175,13 +174,13 @@ function stop() {
 
 //repopulate local storage saved items
 for (let i = 0; i < localStorage.length; i++) {
-    var button = document.createElement("button")
-   
+    var button = document.createElement("button")   
     button.textContent = (localStorage.key(i));
     saves.appendChild(button);
     button.classList.add('waves-effect', 'waves-light', 'btn')
 }
 
+//local storage
 function save() {
     console.log(notes)
     localStorage.setItem(title.split(' ').slice(0, 2).join(' '), JSON.stringify(notes))
@@ -197,7 +196,6 @@ function save() {
 }
 
 //sliders and buttons
-
 bpmSlider.addEventListener('input', function (event) {
     Tone.Transport.bpm.rampTo(+event.target.value, 0.1)
 })
@@ -214,8 +212,6 @@ loopEndSlider.addEventListener('input', function (event) {
 //     console.log(loopStartSlider.value)
 // })
 
-
-
 playButton.addEventListener('click', play)
 stopButton.addEventListener('click', stop)
 searchJokeEl.addEventListener('click', searchJoke)
@@ -229,4 +225,3 @@ clearFavButton.addEventListener('click', function(){
 clearSearchButton.addEventListener('click', function () {
     customSearchEl.value = ""
 })
-
