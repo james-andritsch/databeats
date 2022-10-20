@@ -170,28 +170,27 @@ function stop() {
     playButton.disabled = false
 }
 
+//repopulate local storage saved items
 for (let i = 0; i < localStorage.length; i++) {
-    var button = document.createElement("button") 
+    var button = document.createElement("button")
+   
     button.textContent = (localStorage.key(i));
     favorites.appendChild(button);
-  }
-  
-function save () {
+    button.classList.add('waves-effect', 'waves-light', 'btn')
+}
+
+function save() {
     console.log(notes)
     localStorage.setItem(title.split(' ').slice(0, 2).join(' '), JSON.stringify(notes))
     var button = document.createElement("button")
     button.textContent = title.split(' ').slice(0, 2).join(' ')
 
-    button.addEventListener("click", function() {
-         var repopulate = JSON.parse(localStorage.getItem(button.textContent)) 
-      notes = repopulate
+    button.addEventListener("click", function () {
+        var repopulate = JSON.parse(localStorage.getItem(button.textContent))
+        notes = repopulate
     })
     favorites.appendChild(button);
 }
-
-
-
-
 
 //sliders and buttons
 
